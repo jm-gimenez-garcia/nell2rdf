@@ -5,6 +5,8 @@ target/
  
 # OS Files #
 .DS_Store
+
+*DS__Store*
  
 *.class
  
