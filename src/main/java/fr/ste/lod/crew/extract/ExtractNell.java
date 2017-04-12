@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import fr.ste.lod.crew.utils.string2rdf.StringTranslate;
 
 /**
- * @author Quentin Cruzille
+ * @author Quentin Cruzille & Jose M. Gimenez-Garcia
  */
 public class ExtractNell {
 	/**
@@ -25,13 +25,13 @@ public class ExtractNell {
 	/**
 	 * Constructeur, ne prend pas d'arguement, initialise first et translator.
 	 */
-	public ExtractNell(String prefix) {
+	public ExtractNell(final String prefix, final String metadata) {
 		this.first = true;
-		this.translator = new StringTranslate(prefix);
+		this.translator = new StringTranslate(prefix, metadata);
 	}
 
 	/**
-	 * Extrait les informations de Nell, les convertis et les traduits ligne par ligne.
+	 * Extrait les informations de Nell, les convertis et les traduits ligne par ligne. Modified to pass the whole line to the translator to process all metadata.
 	 */
 	public void extraction(String instancesFileName) {
 		try {
@@ -45,8 +45,8 @@ public class ExtractNell {
 				} else {
 					String[] lineSplit = line.split("\t");
 					if (lineSplit.length >= 12) {
-						String[] lineRDF = { lineSplit[0], lineSplit[1], lineSplit[2], lineSplit[6], lineSplit[7], lineSplit[8], lineSplit[9], lineSplit[10], lineSplit[11] };
-						this.translator.stringToRDF(lineRDF);
+						// String[] lineRDF = { lineSplit[0], lineSplit[1], lineSplit[2], lineSplit[6], lineSplit[7], lineSplit[8], lineSplit[9], lineSplit[10], lineSplit[11] };
+						this.translator.stringToRDF(lineSplit);
 					}
 				}
 			}

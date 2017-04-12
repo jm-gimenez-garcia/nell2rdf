@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import fr.ste.lod.crew.utils.string2rdf.StringTranslate;
 
 /**
- * @author Quentin Cruzille
+ * @author Quentin Cruzille & Jose M. Gimenez-Garcia
  */
 public class Extract {
 	
@@ -40,9 +40,9 @@ public class Extract {
 	/**
 	 * Constructeur, ne prend pas d'arguement, initialise first et translator.
 	 */
-	public Extract(String inputFile, String prefix) {
+	public Extract(final String inputFile, final String prefix, final String metadata) {
 		this.first = true;
-		this.translator = new StringTranslate(prefix);
+		this.translator = new StringTranslate(prefix, metadata);
 		this.inputFile = inputFile;
 		this.prefix = prefix;
 	}
