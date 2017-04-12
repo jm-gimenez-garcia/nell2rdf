@@ -29,13 +29,13 @@ Desktop.ini
 ######################
 # OSX
 ######################
- 
-.DS_Store
+
+doc/
 .svn
- 
+
 # Thumbnails
 ._*
- 
+
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
@@ -72,3 +72,9 @@ local.properties
 # PDT-specific
 .buildpath
 
+######################
+# IntelliJ
+######################
+
+.idea
+NellConverter.iml
