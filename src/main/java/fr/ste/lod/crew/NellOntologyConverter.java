@@ -5,9 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.apache.jena.rdf.model.Model;
 import org.apache.log4j.Logger;
-
-import com.hp.hpl.jena.rdf.model.Model;
 
 import fr.ste.lod.crew.beans.NellModel;
 import fr.ste.lod.crew.extract.ExtractNell;
