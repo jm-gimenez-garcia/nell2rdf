@@ -136,10 +136,15 @@ public class StringTranslate {
 	}
 
 	private void stringToRDFWithQuads(final String[] nellData) {
-		stringToRDFWithoutMetadata(nellData);
 
+        // Create normal triple without metadata
+	    stringToRDFWithoutMetadata(nellData);
+
+		// Create triple ID
 		final Resource tripleId = createSequentialResource("ID");
 
+        // Attach metadata to triple ID
+        attachMetadata(tripleId, nellData);
 	}
 
 	private void stringToRDFWithNAry(final String[] nellData) {
