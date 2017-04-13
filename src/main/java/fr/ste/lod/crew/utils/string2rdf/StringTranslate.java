@@ -148,37 +148,45 @@ public class StringTranslate {
 	}
 
 	private void stringToRDFWithReification(final String[] nellData) {
-		Property predicate;
-		RDFNode object;
 
+		// Create normal triple without metadata
 		final Statement triple = stringToRDFWithoutMetadata(nellData);
 
+		// Create reification
 		final Resource statement = createSequentialResource(RDF.Statement);
 		statement.addProperty(RDF.subject, triple.getSubject());
 		statement.addProperty(RDF.predicate, triple.getPredicate());
 		statement.addProperty(RDF.object, triple.getObject());
 
+		// Attach metadata to reification statement
+		attachMetadata(statement, nellData);
+	}
+
+	private void attachMetadata(final Resource resource, final String[] nellData) {
+		Property predicate;
+		RDFNode object;
+
 		// Add iteration of promotion
 		predicate = this.model.getProperty(this.ontologybase + ITERATION_OF_PROMOTION);
 		object = this.model.createTypedLiteral(Integer.parseInt(nellData[3]));
-		statement.addProperty(predicate, object);
+		resource.addProperty(predicate, object);
 
 		// Add probability
 		predicate = this.model.getProperty(this.ontologybase + PROBABILITY);
 		object = this.model.createTypedLiteral(Float.parseFloat(nellData[4]));
-		statement.addProperty(predicate, object);
+		resource.addProperty(predicate, object);
 
 		// Add source
 		// TODO do it properly
 		predicate = this.model.getProperty(this.ontologybase + SOURCE);
 		object = this.model.createTypedLiteral(nellData[5]);
-		statement.addProperty(predicate, object);
+		resource.addProperty(predicate, object);
 
 		// Add candidate source
 		// TODO do it properly
 		predicate = this.model.getProperty(this.ontologybase + CANDIDATE_SOURCE);
 		object = this.model.createTypedLiteral(nellData[12]);
-		statement.addProperty(predicate, object);
+		resource.addProperty(predicate, object);
 	}
 
 	public Statement stringToRDFWithoutMetadata(final String[] nellData) {
