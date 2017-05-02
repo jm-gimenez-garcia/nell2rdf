@@ -3,17 +3,15 @@ package fr.ste.lod.crew.utils.string2rdf;
 import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import fr.ste.lod.crew.extract.metadata.models.LineInstanceJOIN;
+import fr.ste.lod.crew.extract.metadata.util.Utility;
 import org.apache.jena.datatypes.RDFDatatype;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
-import org.apache.jena.rdf.model.Literal;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.ResourceFactory;
-import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.graph.NodeFactory;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
 import org.apache.log4j.Logger;
@@ -33,8 +31,10 @@ public class StringTranslate {
 	public static final String	PROBABILITY				= "probability";
 	public static final String	SOURCE					= "source";
 	public static final String	CANDIDATE_SOURCE		= "candidate_source";
+    public static final String  STATEMENT               = "statement";
+    public static final String  VALUE                   = "value";
 
-	public static Logger		log						= Logger.getLogger(StringTranslate.class);
+    public static Logger		log						= Logger.getLogger(StringTranslate.class);
 
 	/**
 	 * Model contenant contenant les triplets de Nell.
@@ -113,18 +113,23 @@ public class StringTranslate {
 	public void stringToRDF(final String[] nellData) {
 		switch (this.metadata) {
 			case NellOntologyConverter.NONE:
+			    log.debug("Converting string to RDF without metadata");
 				stringToRDFWithoutMetadata(nellData);
 				break;
 			case NellOntologyConverter.REIFICATION:
+                log.debug("Converting string to RDF using reification to attach metadata");
 				stringToRDFWithReification(nellData);
 				break;
 			case NellOntologyConverter.N_ARY:
+                log.debug("Converting string to RDF using n-ary relations to attach metadata");
 				stringToRDFWithNAry(nellData);
 				break;
 			case NellOntologyConverter.QUADS:
+                log.debug("Converting string to RDF using quads to attach metadata");
 				stringToRDFWithQuads(nellData);
 				break;
 			case NellOntologyConverter.SINGLETON_PROPERTY:
+                log.debug("Converting string to RDF using singleton property to attach metadata");
 				stringToRDFWithSingletoProperty(nellData);
 				break;
 		}
@@ -138,10 +143,12 @@ public class StringTranslate {
 	private void stringToRDFWithQuads(final String[] nellData) {
 
         // Create normal triple without metadata
-	    stringToRDFWithoutMetadata(nellData);
+        final Statement triple = stringToRDFWithoutMetadata(nellData);
 
-		// Create triple ID
+		// Create QUAD
 		final Resource tripleId = createSequentialResource("ID");
+		final Quad quad = new Quad(tripleId.asNode(), triple.asTriple());
+		triple.createReifiedStatement();
 
         // Attach metadata to triple ID
         attachMetadata(tripleId, nellData);
@@ -158,10 +165,7 @@ public class StringTranslate {
 		final Statement triple = stringToRDFWithoutMetadata(nellData);
 
 		// Create reification
-		final Resource statement = createSequentialResource(RDF.Statement);
-		statement.addProperty(RDF.subject, triple.getSubject());
-		statement.addProperty(RDF.predicate, triple.getPredicate());
-		statement.addProperty(RDF.object, triple.getObject());
+        ReifiedStatement statement = triple.createReifiedStatement(createSequentialUri(STATEMENT));
 
 		// Attach metadata to reification statement
 		attachMetadata(statement, nellData);
@@ -171,27 +175,27 @@ public class StringTranslate {
 		Property predicate;
 		RDFNode object;
 
+		LineInstanceJOIN metadata = new LineInstanceJOIN(nellData[0], nellData[1], nellData[2], nellData[3], Double.valueOf(nellData[4]), Utility.DecodeURL(nellData[5]), nellData[6], nellData[7], nellData[8], nellData[9], nellData[10], nellData[11], Utility.DecodeURL(nellData[12]), String.join("\t", nellData));
+
 		// Add iteration of promotion
-		predicate = this.model.getProperty(this.ontologybase + ITERATION_OF_PROMOTION);
-		object = this.model.createTypedLiteral(Integer.parseInt(nellData[3]));
+        predicate = this.model.getProperty(this.ontologybase + ITERATION_OF_PROMOTION);
+        object = this.model.createTypedLiteral(metadata.getNrIterations());
 		resource.addProperty(predicate, object);
 
 		// Add probability
-		predicate = this.model.getProperty(this.ontologybase + PROBABILITY);
-		object = this.model.createTypedLiteral(Float.parseFloat(nellData[4]));
+        predicate = this.model.getProperty(this.ontologybase + PROBABILITY);
+        object = this.model.createTypedLiteral(metadata.getProbability());
 		resource.addProperty(predicate, object);
 
-		// Add source
-		// TODO do it properly
-		predicate = this.model.getProperty(this.ontologybase + SOURCE);
-		object = this.model.createTypedLiteral(nellData[5]);
-		resource.addProperty(predicate, object);
+        metadata.getListComponents().forEach((K, V) -> {
+            Property predicate_λ = this.model.getProperty(this.ontologybase + SOURCE);
+            RDFNode source = createSequentialResource(K);
+            resource.addProperty(predicate_λ,source);
 
-		// Add candidate source
-		// TODO do it properly
-		predicate = this.model.getProperty(this.ontologybase + CANDIDATE_SOURCE);
-		object = this.model.createTypedLiteral(nellData[12]);
-		resource.addProperty(predicate, object);
+            predicate_λ = model.getProperty(this.ontologybase + VALUE);
+            RDFNode token = this.model.createTypedLiteral(V.toString());
+            source.asResource().addProperty(predicate_λ, token);
+        });
 	}
 
 	public Statement stringToRDFWithoutMetadata(final String[] nellData) {
@@ -277,7 +281,8 @@ public class StringTranslate {
 			}
 		}
 
-		return ResourceFactory.createStatement(subject, relation, object_node);
+		return model.createStatement(subject, relation, object_node);
+		//return ResourceFactory.createStatement(subject, relation, object_node);
 	}
 	
 	/**
@@ -307,15 +312,19 @@ public class StringTranslate {
 	}
 
 	private Resource createSequentialResource(final Resource resource_class) {
-		final Resource resource = this.model.createResource(this.base + resource_class.getLocalName() + ++this.statementNumber);
+		final Resource resource = this.model.createResource(createSequentialUri(resource_class.getLocalName()));
 		resource.addProperty(RDF.type, resource_class);
 		return resource;
 	}
 
 	private Resource createSequentialResource(final String resource_name) {
-		final Resource resource = this.model.createResource(this.base + resource_name + ++this.statementNumber);
+		final Resource resource = this.model.createResource(createSequentialUri(resource_name));
 		return resource;
 	}
+
+    private String createSequentialUri(final String name) {
+	    return this.base + name + ++this.statementNumber;
+    }
 
 	/**
 	 * Renvoi la propriete associee e une chaene de caracteres.

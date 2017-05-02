@@ -203,7 +203,7 @@ public class NellOntologyConverter {
 	 */
 	private void translateNellInstancesToRDF(final String nellInstanceFile, final String rdfInstanceFile, final String prefix) {
 
-		final boolean n3 = false;
+		boolean n3 = false;
 		boolean turtle = false;
 		boolean rdf = false;
 
@@ -215,7 +215,7 @@ public class NellOntologyConverter {
 				turtle = true;
 				break;
 			case N3:
-				rdf = true;
+				n3 = true;
 				break;
 		}
 
@@ -223,7 +223,7 @@ public class NellOntologyConverter {
 		WriteNell write;
 		extract.extraction(nellInstanceFile);
 		System.out.println("Model extraction Done.");
-		write = new WriteNell(extract.getTranslator().getModel(),rdf,turtle,n3, rdfInstanceFile);
+		write = new WriteNell(extract.getTranslator().getModel(),rdf,turtle,n3, rdfInstanceFile, this.metadata);
 		write.write();
 		System.out.println("Serialisation complete to "+rdfInstanceFile);
 		

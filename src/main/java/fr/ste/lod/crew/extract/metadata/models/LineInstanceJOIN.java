@@ -175,11 +175,12 @@ public final class LineInstanceJOIN {
             }
         }
 
-        try {
-            Utility.writeStringBuffer(noComponent, Main.fileOut + "NO_COMPONENT_FOUND", true);
-        } catch (IOException ex) {
-            Logger.getLogger(LineInstanceJOIN.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // Debug
+        //        try {
+        //            Utility.writeStringBuffer(noComponent, Main.fileOut + "NO_COMPONENT_FOUND", true);
+        //        } catch (IOException ex) {
+        //            Logger.getLogger(LineInstanceJOIN.class.getName()).log(Level.SEVERE, null, ex);
+        //        }
     }
 
     public double getProbability() {
