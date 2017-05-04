@@ -5,11 +5,9 @@
  */
 package fr.ste.lod.crew.extract.metadata.models;
 
-
 import fr.ste.lod.crew.extract.metadata.util.Utility;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,13 +18,19 @@ public abstract class Header {
 
     private final String source;
     protected String componentName;
-    private List<Integer> iteration;
+    private int iteration;
 
     private String dateTime;
 
     protected Map<String, String[]> mapToken;
 
     abstract public void processStringText(String str);
+
+    public String datetimeFormat() {
+        SimpleDateFormat dtFormat
+                = new SimpleDateFormat("yyyy.MM.dd 'at' hh:mm:ss");
+        return dtFormat.format(getDateTime());
+    }
 
     public Header(String str, String ComponentName) {
         this.mapToken = new HashMap<>();
@@ -44,16 +48,12 @@ public abstract class Header {
         return source;
     }
 
-    public List<Integer> getIteration() {
+    public int getIteration() {
         return iteration;
     }
 
     public String getDateTime() {
         return dateTime;
-    }
-
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
     }
 
     public String getComponentName() {
@@ -77,15 +77,7 @@ public abstract class Header {
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("teste");
         }
-        String tempSplit[] = temp.trim().split("-");
-        this.iteration = new ArrayList<>();
-        for (String iter : tempSplit) {
-            try {
-                this.iteration.add(Integer.valueOf(iter));
-            } catch (NumberFormatException e) {
-                System.err.println(str);
-            }
-        }
+        this.iteration = Integer.valueOf(str.trim());
     }
 
     @Override
@@ -96,10 +88,7 @@ public abstract class Header {
         //Iterations
         output.append("Iterations: ");
         int i = 0;
-        output.append(this.iteration.get(i));
-        for (i = 1; i < this.iteration.size(); i++) {
-            output.append("-").append(this.iteration.get(i));
-        }
+        output.append(this.iteration);
         output.append("\t");
         //Datetime
         output.append("Datetime: ").append(this.dateTime).append("\t");
