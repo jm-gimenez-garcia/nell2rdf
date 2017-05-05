@@ -78,3 +78,9 @@ local.properties
 
 .idea
 NellConverter.iml
+
+######################
+# Maven build
+######################
+
+dependency-reduced-pom.xml
