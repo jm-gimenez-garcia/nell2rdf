@@ -10,9 +10,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -37,6 +42,7 @@ public class Utility {
     private static final String REGEX_LATLONGTT_GEONAMES = "((?<=(>-)|(-geonames:))(.*))";
     private static final String REGEX_LATLONG_ALL_ATRIBUTES = "([A-Za-z ])*(\\@)([0-9-\\.,])*";
     private static final String REGEX_ONTOLOGYMODIFIER = "(?<=((\\d{2}\\:\\d{2}\\:\\d{2}))[-<])";
+    private static final String REGEX_ITERATION_COMPONENT = "(?<=(Iter:))([0-9])*(?=-)";
 
     //private static final String REGEX_TOKEN = "(?<=(<token=))(([a-z_0-9]+),([a-z_0-9]+))";
     private static final String REGEX_FROM = "(From:)+([^ ])*";
@@ -76,28 +82,78 @@ public class Utility {
         return temp.trim();
     }
 
-    public static String getDateTime(String str) {
+    public static Date getDateTime(String str) throws ParseException {
+
         Pattern pattern = Pattern.compile(REGEX_DATETIME_NEW);
         Matcher matcher = pattern.matcher(str);
         String temp = "";
         if (matcher.find()) {
             temp = matcher.group();
+            // return setDatetimeFormat("yyyy/MM/dd-hh:mm:ss", temp);
+            temp = (temp.trim().replace("/", "-").replace(":", "-")).trim();
         } else {
             pattern = Pattern.compile(REGEX_DATETIME_OLD);
             matcher = pattern.matcher(str);
-            if (matcher.find()) {
-                temp = matcher.group();
-            } else {
-                System.err.println("AQUI: " + str);
-            }
-
+            matcher.find();
+            temp = matcher.group();
+            //return setDatetimeFormat("yyyy-MM-dd hh:mm:ss", temp);
+            temp = (temp.trim().replace(":", "-").replace(" ", "-").replace(":", "-")).trim();
         }
+        return setDateTimeFormat(temp);
+    }
 
-        return temp;
+    public static Date setDatetimeFormat(String formatIN, String dateTimeUnformated) {
+        SimpleDateFormat fdIN = new SimpleDateFormat(formatIN);
+        SimpleDateFormat fdOUT = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+
+        System.out.print(dateTimeUnformated + " Parses as ");
+        Date date = null;
+        Date dateteste = null;
+        try {
+            date = fdIN.parse(dateTimeUnformated);
+            dateteste = fdOUT.parse(fdOUT.format(date));
+
+        } catch (ParseException e) {
+            System.out.println("Unparseable using " + fdIN);
+        }
+        return dateteste;
+    }
+
+    public static Date setDateTimeFormat(String dateSTR) {
+        Date date = new Date();
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        TimeZone.setDefault(tz);
+
+        String dateTemp[] = dateSTR.split("-");
+
+        int year = Integer.valueOf(dateTemp[0]);
+        int month = Integer.valueOf(dateTemp[1]);
+        int day = Integer.valueOf(dateTemp[2]);
+        int m = Integer.valueOf(dateTemp[3]);
+        int s = Integer.valueOf(dateTemp[4]);
+        int ml = Integer.valueOf(dateTemp[5]);
+
+        GregorianCalendar gcalendar = new GregorianCalendar();
+        //gcalendar.set(2017, (1 - 1), 01, 16, 30, 01);
+        gcalendar.set(year, (month - 1), day, m, s, ml);
+
+        SimpleDateFormat simpleDateFormat
+                = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        try {
+            date = simpleDateFormat.parse(simpleDateFormat.format(gcalendar.getTime()));
+        } catch (ParseException ex) {
+            System.out.println("Problema com a formatação de data " + dateSTR + " " + ex);
+        }
+        //System.out.println("UTC:     " + simpleDateFormat.format(gcalendar.getTime()));
+        return date;
     }
 
     public static String getComponentsHeader(String str) {
         return extract(str, REGEX_HEADER_ALL_COMPONENTS);
+    }
+
+    public static String getIterationComponent(String str) {
+        return extract(str, REGEX_ITERATION_COMPONENT);
     }
 
     public static String getLatog(String str) {
@@ -223,7 +279,6 @@ public class Utility {
             return null;
         } catch (UnsupportedEncodingException ex) {
             System.out.println(ex);
-            Logger.getLogger(Utility.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
         return result;
@@ -247,5 +302,15 @@ public class Utility {
             //close the stream
         }
     }
-
+/*
+    public static void writeJsonFile(JSONObject jObject, String path, boolean next) throws IOException {
+        //write contents of StringBuffer to a file
+        try (BufferedWriter bwr = new BufferedWriter(new FileWriter(new File(path), next))) {
+            //write contents of StringBuffer to a file
+            bwr.write(jObject.toJSONString());
+            //flush the stream
+            bwr.flush();
+            //close the stream
+        }
+    }*/
 }

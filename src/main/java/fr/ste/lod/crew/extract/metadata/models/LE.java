@@ -11,8 +11,8 @@ package fr.ste.lod.crew.extract.metadata.models;
  */
 public class LE extends Header{
 
-    public LE(String str) {
-        super(str, "LE");
+  public LE(String str,double Probability) {
+        super(str, "LE",Probability);
     }
 
     @Override

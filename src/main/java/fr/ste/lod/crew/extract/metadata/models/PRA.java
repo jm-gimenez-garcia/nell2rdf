@@ -12,10 +12,10 @@ import java.util.Map;
 
 public class PRA extends Header {
 
-    private Map<String, Double> mapTriple;
+   private Map<String, Double> mapTriple;
 
-    public PRA(String str) {
-        super(str, "PRA");
+    public PRA(String str,double Probability) {
+        super(str, "PRA", Probability);
     }
 
     public Map<String, Double> getMapTriple() {
@@ -48,5 +48,4 @@ public class PRA extends Header {
 
         return super.toString() + temp.toString() + "]";
     }
-
 }

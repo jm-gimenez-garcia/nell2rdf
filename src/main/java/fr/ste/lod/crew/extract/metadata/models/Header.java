@@ -6,9 +6,12 @@
 package fr.ste.lod.crew.extract.metadata.models;
 
 import fr.ste.lod.crew.extract.metadata.util.Utility;
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,29 +19,38 @@ import java.util.Map;
  */
 public abstract class Header {
 
-    private final String source;
+      private String source;
     protected String componentName;
     private int iteration;
 
-    private String dateTime;
+    private double probability;
+
+    private Date dateTime;
 
     protected Map<String, String[]> mapToken;
 
     abstract public void processStringText(String str);
 
-    public String datetimeFormat() {
-        SimpleDateFormat dtFormat
-                = new SimpleDateFormat("yyyy.MM.dd 'at' hh:mm:ss");
-        return dtFormat.format(getDateTime());
+    public Header(String str, String ComponentName, double Probability) {
+        this.headerTreatment(str, ComponentName);
+        this.probability = Probability;
     }
 
     public Header(String str, String ComponentName) {
+        this.headerTreatment(str, ComponentName);
+    }
+
+    private void headerTreatment(String str, String ComponentName) {
         this.mapToken = new HashMap<>();
         this.componentName = ComponentName;
         this.source = str;
         processStringText(this.source);
-        this.dateTime = Utility.getDateTime(Utility.getComponentsHeader(str));
-        this.setIterations(str);
+        try {
+            this.dateTime = Utility.getDateTime(Utility.getComponentsHeader(str));
+        } catch (ParseException ex) {
+            Logger.getLogger(Header.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.setIteration(str);
 
         setToken(str);
 
@@ -52,12 +64,20 @@ public abstract class Header {
         return iteration;
     }
 
-    public String getDateTime() {
+    public Date getDateTime() {
         return dateTime;
     }
 
     public String getComponentName() {
         return componentName;
+    }
+
+    public double getProbability() {
+        return probability;
+    }
+
+    public Map<String, String[]> getMapToken() {
+        return mapToken;
     }
 
     public void setToken(String str) {
@@ -70,14 +90,8 @@ public abstract class Header {
         }
     }
 
-    public void setIterations(String str) {
-        String temp = "";
-        try {
-            temp = str.substring(str.indexOf(":") + 1, str.indexOf("-".concat(this.dateTime)));
-        } catch (StringIndexOutOfBoundsException e) {
-            System.out.println("teste");
-        }
-        this.iteration = Integer.valueOf(str.trim());
+    public void setIteration(String str) {
+        this.iteration = Integer.valueOf(Utility.getIterationComponent(str));
     }
 
     @Override
@@ -86,7 +100,7 @@ public abstract class Header {
         //Component Name
         output.append("[ComponentName: ").append(this.componentName).append("\t");
         //Iterations
-        output.append("Iterations: ");
+        output.append("Iteration: ");
         int i = 0;
         output.append(this.iteration);
         output.append("\t");
@@ -105,6 +119,7 @@ public abstract class Header {
             output.append(",").append(tempKey[2]);
         }
         output.append(">");
+         output.append(" probability [").append(this.probability).append("]");
         return output.toString();
 
     }

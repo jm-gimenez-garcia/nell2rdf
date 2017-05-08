@@ -13,10 +13,10 @@ import fr.ste.lod.crew.extract.metadata.util.Utility;
  */
 public class RuleInference extends Header {
 
-    private String rules;
+   private String rules;
 
-    public RuleInference(String str) {
-        super(str, "RuleInference");
+    public RuleInference(String str,double Probability) {
+        super(str, "RuleInference",Probability);
     }
 
     @Override
@@ -32,7 +32,4 @@ public class RuleInference extends Header {
     public String toString() {
         return super.toString() + "{" + getRules()+"}]"; 
     }
-    
-    
-
 }

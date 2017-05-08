@@ -14,10 +14,10 @@ import fr.ste.lod.crew.extract.metadata.util.Utility;
  */
 public class KbManipulation extends Header {
 
-    private String oldBug;
+     private String oldBug;
 
-    public KbManipulation(String str) {
-        super(str, "KbManipulation");
+    public KbManipulation(String str,double Probability) {
+        super(str, "KbManipulation",Probability);
     }
 
     public String getOldBug() {

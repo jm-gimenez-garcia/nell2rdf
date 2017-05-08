@@ -16,10 +16,10 @@ import java.util.regex.Pattern;
  */
 public class OE extends Header {
 
-    private Map<String, String> mapTextURL;
+   private Map<String, String> mapTextURL;
 
-    public OE(String str) {
-        super(str,"OE");
+    public OE(String str,double Probability) {
+        super(str,"OE", Probability);
     }
 
     public Map<String, String> getMapTPOccurence() {
@@ -67,8 +67,4 @@ public class OE extends Header {
             i += 2;
         }
     }
-  
-    
-   
-
 }

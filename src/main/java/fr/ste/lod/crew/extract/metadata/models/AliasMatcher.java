@@ -14,11 +14,11 @@ import fr.ste.lod.crew.extract.metadata.util.Utility;
  */
 public class AliasMatcher extends Header {
 
-    //[Freebase 7/9/2012]
+     //[Freebase 7/9/2012]
     private String FreebaseDate;
 
-    public AliasMatcher(String str) {
-        super(str, "AliasMatcher");
+    public AliasMatcher(String str,double Probability) {
+        super(str, "AliasMatcher", Probability);
     }
 
     @Override

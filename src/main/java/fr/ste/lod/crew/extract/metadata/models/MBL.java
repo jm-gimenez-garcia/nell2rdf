@@ -21,8 +21,8 @@ public class MBL extends Header {
         return promotionOfConcept;
     }
 
-    public MBL(String str) {
-        super(str, "MBL");
+    public MBL(String str,double Probability) {
+        super(str, "MBL", Probability);
     }
 
     @Override
@@ -34,5 +34,6 @@ public class MBL extends Header {
     public String toString() {
         return super.toString() + " " + getPromotionOfConcept() + "]";
     }
+
 
 }

@@ -30,10 +30,10 @@ public final class LineInstanceJOIN {
 
     private List<Integer> nrIterations = new ArrayList<>();
 
-    private double probability;
+    private List<Double> probability;
 
     //Object Responsable for the Source Column
-    private String source;
+    private final String source;
     private MBL_OR_ERC MBL_source;
 
     //Object Responsable for the Source Column
@@ -44,12 +44,8 @@ public final class LineInstanceJOIN {
     private List<String> categoriesForEntity;
     private List<String> categoriesForValue;
 
-    private String candidateSource;
+    private final String candidateSource;
     private Map<String, Object> listComponents;
-
-    public void setProbability(double Probability) {
-        this.probability = Probability;
-    }
 
     public void inicilizeObjets() {
         this.entityLiteralStrings = new ArrayList<>();
@@ -58,6 +54,8 @@ public final class LineInstanceJOIN {
         this.bestValueLiteralString = new ArrayList<>();
         this.categoriesForEntity = new ArrayList<>();
         this.categoriesForValue = new ArrayList<>();
+        this.nrIterations = new ArrayList<>();
+        this.probability = new ArrayList<>();
 
         listComponents = new HashMap<>();
     }
@@ -76,11 +74,11 @@ public final class LineInstanceJOIN {
     }
 
     public LineInstanceJOIN(String Entity, String Relation, String Value, String Iteration,
-            double probabilityPROMOTION, String Source, String EntityLiteralStrings,
+            String probabilityPROMOTION, String Source, String EntityLiteralStrings,
             String ValueLiteralStrings, String BestEntityLiteralString, String BestValueLiteralString,
             String CategoriesForEntity, String CategoriesForValue, String CandidatSource, String CompleteLine) {
 
-        inicilizeObjets();
+        this.inicilizeObjets();
 
         String tempMBLorERC = "";
         this.source = Source;
@@ -99,7 +97,7 @@ public final class LineInstanceJOIN {
         this.entity = Entity;
         this.relation = Relation;
         this.value = Value;
-        this.probability = probabilityPROMOTION;
+        this.setProbability(probabilityPROMOTION);
         this.setIterations(Iteration);
 
         this.entityLiteralStrings.addAll(Arrays.asList(organizeStringsExtraction(EntityLiteralStrings).split(",")));
@@ -112,78 +110,14 @@ public final class LineInstanceJOIN {
         this.completeLine = CompleteLine;
 
         this.candidateSource = CandidatSource;
-        setListComponents(Utility.getSTRperComponents(Utility.getCandidateSource(this.candidateSource)));
+        this.setListComponents(Utility.getSTRperComponents(Utility.getCandidateSource(this.candidateSource)), this.probability);
     }
 
     public Map<String, Object> getListComponents() {
         return listComponents;
     }
 
-    public void setIterations(String str) {
-        String strSplit[] = str.split(" ");
-        for (String srtTemp : strSplit) {
-            this.nrIterations.add(Integer.valueOf(srtTemp));
-        }
-    }
-
-    //Macarronada Italiana
-    //Here is where the componentes are created; [ aqui
-    public void setListComponents(List<String> stringListComponents) {
-
-        StringBuffer noComponent = new StringBuffer();
-        for (int i = 0; i < stringListComponents.size(); i++) {
-            String line = stringListComponents.get(i);
-
-            if (line.startsWith("OntologyModifier-Iter:")) {
-                this.listComponents.put("OntologyModifier", new OntologyModifier(line));
-            } else if (line.startsWith("CPL-Iter:")) {
-                this.listComponents.put("CPL", new CPL_CML(line));
-            } else if (line.startsWith("SEAL-Iter:")) {
-                this.listComponents.put("SEAL", new SEAL(line));
-            } else if (line.startsWith("OE-Iter:")) {
-                this.listComponents.put("OE", new OE(line));
-            } else if (line.startsWith("CMC-Iter:")) {
-                this.listComponents.put("CMC", new CMC(line));
-            } else if (line.startsWith("AliasMatcher-Iter:")) {
-                this.listComponents.put("AliasMatcher", new AliasMatcher(line));
-            } else if (line.startsWith("MBL-Iter:")) {
-                this.listComponents.put("MBL", new MBL(line));
-            } else if (line.startsWith("PRA-Iter")) {
-                this.listComponents.put("PRA", new PRA(line));
-            } else if (line.startsWith("RuleInference-Iter")) {
-                this.listComponents.put("RuleInference", new RuleInference(line));
-            } else if (line.startsWith("KbManipulation-Iter")) {
-                this.listComponents.put("KbManipulation", new KbManipulation(line));
-            } else if (line.startsWith("Semparse-Iter")) {
-                this.listComponents.put("Semparse", new Semparse(line));
-            } else if (line.startsWith("LE-Iter")) {
-                this.listComponents.put("LE", new LE(line));
-            } else if (line.startsWith("SpreadsheetEdits-Iter")) {
-                this.listComponents.put("SpreadsheetEdits", new SpreadsheetEdits(line));
-            } else if ((line.startsWith("LatLong-Iter") || (line.startsWith("LatLongTT-Iter")))) {
-                this.listComponents.put("LatLong", new LatLong(line));
-            } else {
-                noComponent.append("{").append(line).append("}").append(this.completeLine).append("\n");
-                if (noComponent.length() > 10000000) {
-                    try {
-                        Utility.writeStringBuffer(noComponent, Main.fileOut + "NO_COMPONENT_FOUND", true);
-                    } catch (IOException ex) {
-                        Logger.getLogger(LineInstanceJOIN.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    noComponent.delete(0, noComponent.length());
-                }
-            }
-        }
-
-        // Debug
-        //        try {
-        //            Utility.writeStringBuffer(noComponent, Main.fileOut + "NO_COMPONENT_FOUND", true);
-        //        } catch (IOException ex) {
-        //            Logger.getLogger(LineInstanceJOIN.class.getName()).log(Level.SEVERE, null, ex);
-        //        }
-    }
-
-    public double getProbability() {
+    public List<Double> getProbability() {
         return probability;
     }
 
@@ -203,8 +137,68 @@ public final class LineInstanceJOIN {
         return nrIterations;
     }
 
-    public void setNrIterations(int iteration) {
-        this.nrIterations.add(iteration);
+    public void setProbability(String str) {
+        String temp = str.replace("]", "").replace("[", "");
+        if (temp.contains(",")) {
+            String strSplit[];
+            strSplit = temp.split(", ");
+            for (String srtTemp : strSplit) {
+                this.probability.add(Double.valueOf(srtTemp));
+            }
+        } else {
+            this.probability.add(Double.valueOf(temp));
+        }
     }
 
+    public void setIterations(String str) {
+        String temp = str.replace("]", "").replace("[", "");
+        if (temp.contains(",")) {
+            String strSplit[];
+            strSplit = temp.split(", ");
+            for (String srtTemp : strSplit) {
+                this.nrIterations.add(Integer.valueOf(srtTemp));
+            }
+        } else {
+            this.nrIterations.add(Integer.valueOf(temp));
+        }
+    }
+
+    //Macarronada Italiana
+    //Here is where the componentes are created; [ aqui
+    public void setListComponents(List<String> stringListComponents, List<Double> probList) {
+
+        for (int i = 0; i < stringListComponents.size(); i++) {
+            String line = stringListComponents.get(i);
+
+            if (line.startsWith("OntologyModifier-Iter:")) {
+                this.listComponents.put("OntologyModifier", new OntologyModifier(line, probList.get(i)));
+            } else if (line.startsWith("CPL-Iter:")) {
+                this.listComponents.put("CPL", new CPL_CML(line, probList.get(i)));
+            } else if (line.startsWith("SEAL-Iter:")) {
+                this.listComponents.put("SEAL", new SEAL(line, probList.get(i)));
+            } else if (line.startsWith("OE-Iter:")) {
+                this.listComponents.put("OE", new OE(line, probList.get(i)));
+            } else if (line.startsWith("CMC-Iter:")) {
+                this.listComponents.put("CMC", new CMC(line, probList.get(i)));
+            } else if (line.startsWith("AliasMatcher-Iter:")) {
+                this.listComponents.put("AliasMatcher", new AliasMatcher(line, probList.get(i)));
+            } else if (line.startsWith("MBL-Iter:")) {
+                this.listComponents.put("MBL", new MBL(line, probList.get(i)));
+            } else if (line.startsWith("PRA-Iter")) {
+                this.listComponents.put("PRA", new PRA(line, probList.get(i)));
+            } else if (line.startsWith("RuleInference-Iter")) {
+                this.listComponents.put("RuleInference", new RuleInference(line, probList.get(i)));
+            } else if (line.startsWith("KbManipulation-Iter")) {
+                this.listComponents.put("KbManipulation", new KbManipulation(line, probList.get(i)));
+            } else if (line.startsWith("Semparse-Iter")) {
+                this.listComponents.put("Semparse", new Semparse(line, probList.get(i)));
+            } else if (line.startsWith("LE-Iter")) {
+                this.listComponents.put("LE", new LE(line, probList.get(i)));
+            } else if (line.startsWith("SpreadsheetEdits-Iter")) {
+                this.listComponents.put("SpreadsheetEdits", new SpreadsheetEdits(line, probList.get(i)));
+            } else if ((line.startsWith("LatLong-Iter") || (line.startsWith("LatLongTT-Iter")))) {
+                this.listComponents.put("LatLong", new LatLong(line, probList.get(i)));
+            }
+        }
+    }
 }

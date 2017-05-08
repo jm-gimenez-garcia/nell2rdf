@@ -6,6 +6,7 @@
 package fr.ste.lod.crew.extract.medatada;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 /**
  *
@@ -13,13 +14,13 @@ import java.io.IOException;
  */
 public class Main {
 
-    //public static String fileNELLcsv = "D:\\Google-Drive\\PG\\RDF_NELL\\Teste_NELL.08m.1045.esv.csv";
-    public static String fileNELLcsv = "D:\\Google-Drive\\PG\\NELL2RDF\\NELL.08m.1050.esv.csv";
+   //public static String fileNELLcsv = "D:\\Google-Drive\\PG\\RDF_NELL\\Teste_NELL.08m.1045.esv.csv";
+    //public static String fileNELLcsv = "D:\\Google-Drive\\PG\\NELL2RDF\\NELL.08m.1050.esv.csv";
+    public static String fileNELLcsv = "D:\\NELL.08m.1050.cesv.csv";
     public static String fileOut = "D:\\Google-Drive\\PG\\NELL2RDF\\";
     public static String fileOutToString = "D:\\fileOutToString";
-   
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException {
 
         ManipulationExecution KBManip = new ManipulationExecution();
         KBManip.readNELLcsv(fileNELLcsv, fileOut);

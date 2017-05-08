@@ -15,8 +15,8 @@ import fr.ste.lod.crew.extract.metadata.util.Utility;
  */
 public class LatLong {
 
-    private final String source;
-    //if LatLongTT ent√£o -geonames: 
+  private final String source;
+    //if LatLongTT ent„o -geonames: 
     private LatLong_aux LLong;
     private LatLong_aux LLongTT;
 
@@ -32,24 +32,24 @@ public class LatLong {
         return source;
     }
 
-    public LatLong(String str) {
+    public LatLong(String str,double Probability) {
         this.source = str;
         String strSplit[] = str.split("#L");
 
         switch (strSplit.length) {
             case 1:
                 if (strSplit[0].contains("LatLong")) {
-                    LLong = new LatLong_aux(strSplit[0].trim(), "LatLong");
+                    LLong = new LatLong_aux(strSplit[0].trim(), "LatLong",Probability);
                 } else if (strSplit[0].contains("LatLongTT")) {
-                    LLongTT = new LatLong_aux(strSplit[1].trim(), "LatLongTT");
+                    LLongTT = new LatLong_aux(strSplit[1].trim(), "LatLongTT",Probability);
                 }
                 break;
             case 2:
-                LLong = new LatLong_aux(strSplit[0].trim(), "LatLong");
-                LLongTT = new LatLong_aux(strSplit[1].trim(), "LatLongTT");
+                LLong = new LatLong_aux(strSplit[0].trim(), "LatLong", Probability);
+                LLongTT = new LatLong_aux(strSplit[1].trim(), "LatLongTT", Probability);
                 break;
             default:
-                System.out.println("Exce√ß√£o de um trem");
+                System.out.println("ExceÁ„o de um trem");
                 break;
         }
     }
@@ -60,8 +60,8 @@ public class LatLong {
         private double X;
         private double Y;
 
-        public LatLong_aux(String str, String ComponentName) {
-            super(str, ComponentName);
+        public LatLong_aux(String str, String ComponentName,double Probability) {
+            super(str, ComponentName, Probability);
         }
 
         public String getString() {
@@ -130,5 +130,4 @@ public class LatLong {
         }
         return super.toString() + temp.toString() + "]";
     }
-
 }

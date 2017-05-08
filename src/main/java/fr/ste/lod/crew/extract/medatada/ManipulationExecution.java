@@ -41,7 +41,7 @@ public class ManipulationExecution {
     public void setFeatures(String line) {
 
         String[] split = line.split("\t");
-        LI = new LineInstanceJOIN(split[0], split[1], split[2], split[3], Double.valueOf(split[4]),
+        LI = new LineInstanceJOIN(split[0], split[1], split[2], split[3], split[4],
                 Utility.DecodeURL(split[5]), split[6], split[7],
                 split[8], split[9], split[10],
                 split[11], Utility.DecodeURL(split[12]), line);
@@ -70,6 +70,15 @@ public class ManipulationExecution {
                         break;
                     case "CPL":
                         temp.append(((CPL_CML) pair.getValue()).toString());
+                        /*JSON_CPL_CML jsonCPL = new JSON_CPL_CML(pair.getValue());
+                        jsonCPL.setJsonObject();
+                         {
+                            try {
+                                Utility.writeJsonFile(jsonCPL.getJsonObject(), Main.fileOutToString + "teste", true);
+                            } catch (IOException ex) {
+                                Logger.getLogger(ManipulationExecution.class.getName()).log(Level.SEVERE, null, ex)
+                            }
+                        }*/
                         break;
                     case "SEAL":
                         temp.append(((SEAL) pair.getValue()).toString());
@@ -82,6 +91,14 @@ public class ManipulationExecution {
                         break;
                     case "AliasMatcher":
                         temp.append(((AliasMatcher) pair.getValue()).toString());
+                        /*  {
+                            JSON_AliasMatcher jsonAlias = new JSON_AliasMatcher(pair.getValue());
+                            try {
+                                Utility.writeJsonFile(jsonAlias.getJsonObject(), Main.fileOutToString + "teste", true);
+                            } catch (IOException ex) {
+                                Logger.getLogger(ManipulationExecution.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }*/
                         break;
                     case "MBL":
                         temp.append(((MBL) pair.getValue()).toString());
@@ -114,17 +131,17 @@ public class ManipulationExecution {
 
                 temp.append("\t");
 
-                if (temp.length() > 10000000) {
-                    try {
-                        Utility.writeStringBuffer(temp, Main.fileOutToString, true);
-                    } catch (IOException ex) {
-                        Logger.getLogger(LineInstanceJOIN.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    temp.delete(0, temp.length());
-                }
             }
             );
             temp.append("END").append("\n");
+            if (temp.length() > 10000000) {
+                try {
+                    Utility.writeStringBuffer(temp, Main.fileOutToString, true);
+                } catch (IOException ex) {
+                    Logger.getLogger(LineInstanceJOIN.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                temp.delete(0, temp.length());
+            }
         }
 
         try {
@@ -137,5 +154,4 @@ public class ManipulationExecution {
         System.out.println("Finalizado");
 
     }
-
 }

@@ -24,8 +24,8 @@ public class SEAL extends Header {
 
     private List<String> listURL;
 
-    public SEAL(String str) {
-        super(str, "SEAL");
+    public SEAL(String str,double Probability) {
+        super(str, "SEAL", Probability);
     }
 
     public String getFrom() {

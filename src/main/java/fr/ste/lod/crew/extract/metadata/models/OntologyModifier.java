@@ -15,10 +15,10 @@ import fr.ste.lod.crew.extract.metadata.util.Utility;
  */
 public class OntologyModifier extends Header {
 
-    private String from;
+   private String from;
 
-    public OntologyModifier(String str) {
-        super(str, "OntologyModifier");
+    public OntologyModifier(String str,double Probability) {
+        super(str, "OntologyModifier", Probability);
     }
 
     public String getFrom() {
@@ -38,7 +38,4 @@ public class OntologyModifier extends Header {
     public String toString() {
         return super.toString() + " FROM: "+ this.from + ']';
     }
-    
-    
-
 }

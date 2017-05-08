@@ -17,10 +17,10 @@ import java.util.List;
  */
 public class Semparse extends Header {
 
-    private List<String> listSentence;
+   private List<String> listSentence;
 
-    public Semparse(String str) {
-        super(str, "Semparse");
+    public Semparse(String str,double Probability) {
+        super(str, "Semparse", Probability);
     }
 
     @Override
@@ -44,5 +44,4 @@ public class Semparse extends Header {
             return super.toString() + temp.toString() + "}]";
         }
     }
-
 }

@@ -14,15 +14,15 @@ import fr.ste.lod.crew.extract.metadata.util.Utility;
  */
 public class SpreadsheetEdits extends Header {
 
-    private String userFeedback;
+   private String userFeedback;
     private String entity;
     private String relation;
     private String value;
     private String action;
     private String from;
 
-    public SpreadsheetEdits(String str) {
-        super(str, "SpreadsheetEdits");
+    public SpreadsheetEdits(String str,double Probability) {
+        super(str, "SpreadsheetEdits", Probability);
     }
 
     @Override
@@ -51,5 +51,4 @@ public class SpreadsheetEdits extends Header {
 
         return super.toString() + temp.toString() + "}";
     }
-
 }

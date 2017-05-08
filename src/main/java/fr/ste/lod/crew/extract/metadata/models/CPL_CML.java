@@ -16,12 +16,12 @@ import java.util.regex.Pattern;
  */
 public class CPL_CML extends Header {
 
-    private Map<String, Integer> mapMD;
+       private Map<String, Integer> mapMD;
     //Category or Relation?
     private String from;
 
-    public CPL_CML(String str) {
-        super(str, "CPL");
+    public CPL_CML(String str,double Probability) {
+        super(str, "CPL",Probability);
     }
 
     public String getFrom() {
@@ -72,5 +72,5 @@ public class CPL_CML extends Header {
         }
 
     }
-
+    
 }
