@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.ste.lod.crew.extract.medatada;
+package fr.ste.lod.crew.extract.metadata.test;
 
 import java.io.IOException;
 import java.text.ParseException;

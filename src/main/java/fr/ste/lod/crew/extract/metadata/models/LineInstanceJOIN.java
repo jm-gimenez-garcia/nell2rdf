@@ -5,16 +5,12 @@
  */
 package fr.ste.lod.crew.extract.metadata.models;
  
-import fr.ste.lod.crew.extract.medatada.Main;
 import fr.ste.lod.crew.extract.metadata.util.Utility;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
