@@ -7,15 +7,13 @@ package fr.ste.lod.crew.extract.metadata.models;
 
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 
-
-
 /**
  *
  * @author Maisa
  */
 public class LatLong {
 
-        private final String source;
+    private final String source;
     //if LatLongTT então -geonames: 
     private LatLong_aux LLong;
     private LatLong_aux LLongTT;
@@ -113,12 +111,15 @@ public class LatLong {
             StringBuffer temp = new StringBuffer();
             temp.append("[").append("[ComponentName: ").append(this.componentName).append(" {");
             temp.append(this.string).append("@").append(this.X).append(",").append(this.Y).append("}");
-            return temp.toString();
+            return super.toString() + temp.toString();
         }
 
         @Override
         public String getStringSource() {
-            return toString();
+            StringBuffer temp = new StringBuffer();
+            temp.append("[").append("[ComponentName: ").append(this.componentName).append(" {");
+            temp.append(this.string).append("@").append(this.X).append(",").append(this.Y).append("}");
+            return temp.toString();
         }
 
     }
@@ -137,6 +138,14 @@ public class LatLong {
     }
 
     public String getStringSource() {
-        return toString();
+        StringBuffer temp = new StringBuffer();
+
+        if (this.LLong != null) {
+            temp.append(this.LLong.getStringSource());
+        }
+        if (this.LLongTT != null) {
+            temp.append(this.LLongTT.getStringSource());
+        }
+        return temp.toString() + "]";
     }
 }
