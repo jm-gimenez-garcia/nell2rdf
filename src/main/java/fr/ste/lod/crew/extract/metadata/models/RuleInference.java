@@ -15,8 +15,8 @@ public class RuleInference extends Header {
 
    private String rules;
 
-    public RuleInference(String str,double Probability) {
-        super(str, "RuleInference",Probability);
+    public RuleInference(String str, double Probability) {
+        super(str, "RuleInference", Probability);
     }
 
     @Override
@@ -30,6 +30,11 @@ public class RuleInference extends Header {
 
     @Override
     public String toString() {
-        return super.toString() + "{" + getRules()+"}]"; 
+        return super.toString() + "{" + getRules() + "}]";
+    }
+
+    @Override
+    public String getStringSource() {
+        return "{" + getRules() + "}";
     }
 }

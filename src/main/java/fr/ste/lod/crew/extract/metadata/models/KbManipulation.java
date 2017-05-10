@@ -7,17 +7,16 @@ package fr.ste.lod.crew.extract.metadata.models;
 
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 
-
 /**
  *
  * @author Maisa
  */
 public class KbManipulation extends Header {
 
-     private String oldBug;
+    private String oldBug;
 
-    public KbManipulation(String str,double Probability) {
-        super(str, "KbManipulation",Probability);
+    public KbManipulation(String str, double Probability) {
+        super(str, "KbManipulation", Probability);
     }
 
     public String getOldBug() {
@@ -34,4 +33,8 @@ public class KbManipulation extends Header {
         return super.toString() + " " + this.oldBug + "]";
     }
 
+    @Override
+    public String getStringSource() {
+        return this.oldBug;
+    }
 }

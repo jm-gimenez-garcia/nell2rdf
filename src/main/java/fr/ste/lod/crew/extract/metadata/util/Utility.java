@@ -18,8 +18,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -139,6 +137,33 @@ public class Utility {
 
         SimpleDateFormat simpleDateFormat
                 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        try {
+            date = simpleDateFormat.parse(simpleDateFormat.format(gcalendar.getTime()));
+        } catch (ParseException ex) {
+            System.out.println("Problema com a formatação de data " + dateSTR + " " + ex);
+        }
+        //System.out.println("UTC:     " + simpleDateFormat.format(gcalendar.getTime()));
+        return date;
+    }
+
+    public static Date setDateTimeFormatFreebase(String dateSTR) {
+        Date date = new Date();
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        TimeZone.setDefault(tz);
+        dateSTR = dateSTR.replace("Freebase ", "").trim();
+
+        String dateTemp[] = dateSTR.replace("/", "-").split("-");
+
+        int day = Integer.valueOf(dateTemp[0]);
+        int month = Integer.valueOf(dateTemp[1]);
+        int year = Integer.valueOf(dateTemp[2]);
+
+        GregorianCalendar gcalendar = new GregorianCalendar();
+        //gcalendar.set(2017, (1 - 1), 01, 16, 30, 01);
+        gcalendar.set(year, (month - 1), day);
+
+        SimpleDateFormat simpleDateFormat
+                = new SimpleDateFormat("yyyy/MM/dd");
         try {
             date = simpleDateFormat.parse(simpleDateFormat.format(gcalendar.getTime()));
         } catch (ParseException ex) {
@@ -302,8 +327,8 @@ public class Utility {
             //close the stream
         }
     }
-/*
-    public static void writeJsonFile(JSONObject jObject, String path, boolean next) throws IOException {
+
+    /*public static void writeJsonFile(JSONObject jObject, String path, boolean next) throws IOException {
         //write contents of StringBuffer to a file
         try (BufferedWriter bwr = new BufferedWriter(new FileWriter(new File(path), next))) {
             //write contents of StringBuffer to a file

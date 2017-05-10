@@ -15,7 +15,7 @@ import fr.ste.lod.crew.extract.metadata.util.Utility;
  */
 public class LatLong {
 
-  private final String source;
+    private final String source;
     //if LatLongTT então -geonames: 
     private LatLong_aux LLong;
     private LatLong_aux LLongTT;
@@ -32,16 +32,16 @@ public class LatLong {
         return source;
     }
 
-    public LatLong(String str,double Probability) {
+    public LatLong(String str, double Probability) {
         this.source = str;
         String strSplit[] = str.split("#L");
 
         switch (strSplit.length) {
             case 1:
                 if (strSplit[0].contains("LatLong")) {
-                    LLong = new LatLong_aux(strSplit[0].trim(), "LatLong",Probability);
+                    LLong = new LatLong_aux(strSplit[0].trim(), "LatLong", Probability);
                 } else if (strSplit[0].contains("LatLongTT")) {
-                    LLongTT = new LatLong_aux(strSplit[1].trim(), "LatLongTT",Probability);
+                    LLongTT = new LatLong_aux(strSplit[1].trim(), "LatLongTT", Probability);
                 }
                 break;
             case 2:
@@ -60,7 +60,7 @@ public class LatLong {
         private double X;
         private double Y;
 
-        public LatLong_aux(String str, String ComponentName,double Probability) {
+        public LatLong_aux(String str, String ComponentName, double Probability) {
             super(str, ComponentName, Probability);
         }
 
@@ -116,6 +116,11 @@ public class LatLong {
             return temp.toString();
         }
 
+        @Override
+        public String getStringSource() {
+            return toString();
+        }
+
     }
 
     @Override
@@ -130,4 +135,9 @@ public class LatLong {
         }
         return super.toString() + temp.toString() + "]";
     }
+
+    public String getStringSource() {
+        return toString();
+    }
+
 }

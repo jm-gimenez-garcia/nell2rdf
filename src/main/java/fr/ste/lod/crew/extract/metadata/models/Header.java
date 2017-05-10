@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public abstract class Header {
 
-      private String source;
+    private String source;
     protected String componentName;
     private int iteration;
 
@@ -30,6 +30,8 @@ public abstract class Header {
     protected Map<String, String[]> mapToken;
 
     abstract public void processStringText(String str);
+
+    abstract public String getStringSource();
 
     public Header(String str, String ComponentName, double Probability) {
         this.headerTreatment(str, ComponentName);
@@ -119,9 +121,7 @@ public abstract class Header {
             output.append(",").append(tempKey[2]);
         }
         output.append(">");
-         output.append(" probability [").append(this.probability).append("]");
+        output.append(" probability [").append(this.probability).append("]");
         return output.toString();
-
     }
-
 }

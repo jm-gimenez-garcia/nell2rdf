@@ -14,14 +14,14 @@ import fr.ste.lod.crew.extract.metadata.util.Utility;
  */
 public class SpreadsheetEdits extends Header {
 
-   private String userFeedback;
+ private String userFeedback;
     private String entity;
     private String relation;
     private String value;
     private String action;
     private String from;
 
-    public SpreadsheetEdits(String str,double Probability) {
+    public SpreadsheetEdits(String str, double Probability) {
         super(str, "SpreadsheetEdits", Probability);
     }
 
@@ -50,5 +50,15 @@ public class SpreadsheetEdits extends Header {
         temp.append(" ACTION: ").append(this.action);
 
         return super.toString() + temp.toString() + "}";
+    }
+
+    @Override
+    public String getStringSource() {
+        StringBuffer temp = new StringBuffer();
+        temp.append(" (").append(this.entity).append(",").append(this.relation).append(",").append(this.value).append(")");
+        temp.append("-").append(this.userFeedback).append("-");
+        temp.append(" FROM: ").append(this.from);
+        temp.append(" ACTION: ").append(this.action);
+        return temp.toString() + "}";
     }
 }

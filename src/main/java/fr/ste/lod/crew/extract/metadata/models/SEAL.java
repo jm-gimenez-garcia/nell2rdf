@@ -19,12 +19,13 @@ import java.util.regex.Pattern;
  */
 public class SEAL extends Header {
 
-    private String from;
+   private String from;
     private String fromComplete;
 
+    //private List<URL> listURL;
     private List<String> listURL;
 
-    public SEAL(String str,double Probability) {
+    public SEAL(String str, double Probability) {
         super(str, "SEAL", Probability);
     }
 
@@ -35,6 +36,7 @@ public class SEAL extends Header {
     public String getFromComplete() {
         return fromComplete;
     }
+
     private void setFrom(String str) {
         if (str.toLowerCase().contains("category")) {
             this.from = "Category";
@@ -75,6 +77,22 @@ public class SEAL extends Header {
         matcher.find();
 
         String srtSplit[] = matcher.group().trim().split(" ");
-        listURL.addAll(Arrays.asList(srtSplit));
+
+        for (String urlTemp : srtSplit) {
+            listURL.add((urlTemp));
+        }
     }
+
+    @Override
+    public String getStringSource() {
+        StringBuffer temp = new StringBuffer();
+        temp.append(" FROM: ").append(getFromComplete());
+        temp.append(" {");
+        this.listURL.forEach((str) -> {
+            temp.append('\t').append(str);
+        });
+        temp.append("}");
+        return temp.toString();
+    }
+
 }

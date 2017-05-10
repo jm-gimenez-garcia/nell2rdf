@@ -20,8 +20,8 @@ public class CPL_CML extends Header {
     //Category or Relation?
     private String from;
 
-    public CPL_CML(String str,double Probability) {
-        super(str, "CPL",Probability);
+    public CPL_CML(String str, double Probability) {
+        super(str, "CPL", Probability);
     }
 
     public String getFrom() {
@@ -72,5 +72,22 @@ public class CPL_CML extends Header {
         }
 
     }
+
+    @Override
+    public String getStringSource() {
+        StringBuffer temp = new StringBuffer();
+        temp.append(" FROM: ").append(" ").append(getFrom());
+        temp.append(" {");
+        for (Map.Entry<String, Integer> pair : this.mapMD.entrySet()) {
+            temp.append(pair.getKey()).append("\t").append(pair.getValue()).append("\t");
+        }
+
+        if (temp.lastIndexOf("\t") > -1) {
+            return temp.toString().substring(0, temp.lastIndexOf("\t")) + "}";
+        } else {
+            return temp.toString() + "}";
+        }
+    }
+
     
 }

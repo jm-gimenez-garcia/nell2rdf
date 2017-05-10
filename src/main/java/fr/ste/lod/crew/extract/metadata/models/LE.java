@@ -9,15 +9,20 @@ package fr.ste.lod.crew.extract.metadata.models;
  *
  * @author Maisa
  */
-public class LE extends Header{
+public class LE extends Header {
 
-  public LE(String str,double Probability) {
-        super(str, "LE",Probability);
+    public LE(String str, double Probability) {
+        super(str, "LE", Probability);
     }
 
     @Override
     public void processStringText(String str) {
-        
+
     }
-    
+
+    @Override
+    public String getStringSource() {
+        return null;
+    }
+
 }

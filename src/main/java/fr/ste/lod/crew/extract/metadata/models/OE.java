@@ -7,6 +7,8 @@ package fr.ste.lod.crew.extract.metadata.models;
 
 
 import fr.ste.lod.crew.extract.metadata.util.Utility;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,37 +18,30 @@ import java.util.regex.Pattern;
  */
 public class OE extends Header {
 
-   private Map<String, String> mapTextURL;
+  private Map<String, URL> mapTextURL;
 
-    public OE(String str,double Probability) {
-        super(str,"OE", Probability);
+    public OE(String str, double Probability) {
+        super(str, "OE", Probability);
     }
 
-    public Map<String, String> getMapTPOccurence() {
+    public Map<String, URL> getMapTextURL() {
         return mapTextURL;
-    }
-
-    private void setMapTPOccurence(String text, String url) {
-        this.mapTextURL.put(text, url);
     }
 
     @Override
     public String toString() {
-        
+
         StringBuffer temp = new StringBuffer();
         temp.append(" {");
         this.mapTextURL.entrySet().forEach((entry) -> {
             String key = entry.getKey();
-            String value = entry.getValue();
+            URL value = entry.getValue();
             temp.append(key).append('\t').append(value);
         });
         temp.append("}");
-         
-   
-        return super.toString() + temp.toString() +"]";
-    }
 
-    
+        return super.toString() + temp.toString() + "]";
+    }
 
     @Override
     public void processStringText(String str) {
@@ -59,12 +54,30 @@ public class OE extends Header {
         String temp[] = matcher.group().trim().split("\t");
         int i = 0;
         while (i < temp.length) {
-            if ((i + 1) >= temp.length) {
-                setMapTPOccurence(temp[i], "");
+            if (((i + 1) >= temp.length) || ("".equals(temp[i + 1]))) {
+                mapTextURL.put(temp[i], null);
             } else {
-                setMapTPOccurence(temp[i], temp[i + 1]);
+                try {
+                    mapTextURL.put(temp[i], new URL(temp[i + 1]));
+                } catch (MalformedURLException ex) {
+                    System.out.println("Problema com URL");
+                }
             }
             i += 2;
         }
+    }
+
+    @Override
+    public String getStringSource() {
+        StringBuffer temp = new StringBuffer();
+        temp.append(" {");
+        this.mapTextURL.entrySet().forEach((entry) -> {
+            String key = entry.getKey();
+            URL value = entry.getValue();
+            temp.append(key).append('\t').append(value);
+        });
+        temp.append("}");
+
+        return temp.toString();
     }
 }

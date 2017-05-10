@@ -5,7 +5,6 @@
  */
 package fr.ste.lod.crew.extract.metadata.models;
 
-
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,9 +16,13 @@ import java.util.List;
  */
 public class Semparse extends Header {
 
-   private List<String> listSentence;
+     private List<String> listSentence;
 
-    public Semparse(String str,double Probability) {
+    public List<String> getListSentence() {
+        return listSentence;
+    }
+
+    public Semparse(String str, double Probability) {
         super(str, "Semparse", Probability);
     }
 
@@ -37,11 +40,24 @@ public class Semparse extends Header {
         for (String sentence : this.listSentence) {
             temp.append(sentence).append("\t");
         }
-
         if (temp.lastIndexOf("\t") > -1) {
             return super.toString() + temp.toString().substring(0, temp.lastIndexOf("\t")) + "}]";
         } else {
             return super.toString() + temp.toString() + "}]";
+        }
+    }
+
+    @Override
+    public String getStringSource() {
+        StringBuffer temp = new StringBuffer();
+        temp.append("{");
+        for (String sentence : this.listSentence) {
+            temp.append(sentence).append("\t");
+        }
+        if (temp.lastIndexOf("\t") > -1) {
+            return temp.toString().substring(0, temp.lastIndexOf("\t")) + "}";
+        } else {
+            return temp.toString() + "}";
         }
     }
 }

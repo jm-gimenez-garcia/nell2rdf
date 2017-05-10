@@ -6,6 +6,7 @@
 package fr.ste.lod.crew.extract.metadata.models;
 
 import fr.ste.lod.crew.extract.metadata.util.Utility;
+import java.util.Date;
 
 
 /**
@@ -15,24 +16,28 @@ import fr.ste.lod.crew.extract.metadata.util.Utility;
 public class AliasMatcher extends Header {
 
      //[Freebase 7/9/2012]
-    private String FreebaseDate;
+    private Date FreebaseDate;
 
-    public AliasMatcher(String str,double Probability) {
+    public AliasMatcher(String str, double Probability) {
         super(str, "AliasMatcher", Probability);
     }
 
     @Override
     public void processStringText(String str) {
-        this.FreebaseDate = Utility.getAliasMatcherFreebase(str);
+        this.FreebaseDate = Utility.setDateTimeFormatFreebase(Utility.getAliasMatcherFreebase(str));
     }
 
-    public String getFreebaseDate() {
+    public Date getFreebaseDate() {
         return FreebaseDate;
     }
 
     @Override
     public String toString() {
-        return super.toString() + " "+ getFreebaseDate() + "]";
+        return super.toString() + " " + getFreebaseDate() + "]";
     }
 
+    @Override
+    public String getStringSource() {
+        return this.FreebaseDate.toString();
+    }
 }

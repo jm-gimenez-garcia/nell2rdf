@@ -15,13 +15,13 @@ import fr.ste.lod.crew.extract.metadata.util.Utility;
  */
 public class MBL extends Header {
 
-    private String promotionOfConcept;
+  private String promotionOfConcept;
 
     public String getPromotionOfConcept() {
         return promotionOfConcept;
     }
 
-    public MBL(String str,double Probability) {
+    public MBL(String str, double Probability) {
         super(str, "MBL", Probability);
     }
 
@@ -35,5 +35,9 @@ public class MBL extends Header {
         return super.toString() + " " + getPromotionOfConcept() + "]";
     }
 
+    @Override
+    public String getStringSource() {
+        return getPromotionOfConcept();
+    }
 
 }

@@ -7,17 +7,15 @@ package fr.ste.lod.crew.extract.metadata.models;
 
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 
-
-
 /**
  *
  * @author Maisa
  */
 public class OntologyModifier extends Header {
 
-   private String from;
+    private String from;
 
-    public OntologyModifier(String str,double Probability) {
+    public OntologyModifier(String str, double Probability) {
         super(str, "OntologyModifier", Probability);
     }
 
@@ -36,6 +34,11 @@ public class OntologyModifier extends Header {
 
     @Override
     public String toString() {
-        return super.toString() + " FROM: "+ this.from + ']';
+        return super.toString() + " FROM: " + this.from + ']';
+    }
+
+    @Override
+    public String getStringSource() {
+        return this.from;
     }
 }

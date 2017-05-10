@@ -17,10 +17,9 @@ import java.util.regex.Pattern;
  */
 public class MBL_OR_ERC extends Header {
 
-   public MBL_OR_ERC(String str, String ComponentName) {
+    public MBL_OR_ERC(String str, String ComponentName) {
         super(str, ComponentName);
     }
-
 
     private void setMapToken(Map<String, String[]> mapToken) {
         this.mapToken = mapToken;
@@ -57,4 +56,8 @@ public class MBL_OR_ERC extends Header {
         return mapToken;
     }
 
+    @Override
+    public String getStringSource() {
+       return null;
+    }
 }
