@@ -15,7 +15,7 @@ import fr.ste.lod.crew.extract.metadata.util.Utility;
  */
 public class LatLong {
 
-    private final String source;
+        private final String source;
     //if LatLongTT então -geonames: 
     private LatLong_aux LLong;
     private LatLong_aux LLongTT;
@@ -111,8 +111,8 @@ public class LatLong {
         @Override
         public String toString() {
             StringBuffer temp = new StringBuffer();
-            temp.append("[").append("[ComponentName: ").append(getComponentName()).append(" {");
-            temp.append(getString()).append("@").append(getX()).append(",").append(getY()).append("}");
+            temp.append("[").append("[ComponentName: ").append(this.componentName).append(" {");
+            temp.append(this.string).append("@").append(this.X).append(",").append(this.Y).append("}");
             return temp.toString();
         }
 
@@ -127,17 +127,16 @@ public class LatLong {
     public String toString() {
         StringBuffer temp = new StringBuffer();
 
-        if (getLLong() != null) {
-            temp.append(getLLong().toString());
+        if (this.LLong != null) {
+            temp.append(this.LLong.toString());
         }
-        if (getLLongTT() != null) {
-            temp.append(getLLongTT().toString());
+        if (this.LLongTT != null) {
+            temp.append(this.LLongTT.toString());
         }
-        return super.toString() + temp.toString() + "]";
+        return temp.toString() + "]";
     }
 
     public String getStringSource() {
         return toString();
     }
-
 }
