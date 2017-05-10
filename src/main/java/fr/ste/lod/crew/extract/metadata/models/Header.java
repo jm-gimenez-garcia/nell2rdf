@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author Maisa
  */
-public abstract class Header {
+public abstract class Header extends FormatComponent{
 
     private String source;
     protected String componentName;
@@ -55,6 +55,7 @@ public abstract class Header {
         this.setIteration(str);
 
         setToken(str);
+        formattingHeaderToken(mapToken, componentName);
 
     }
 
@@ -86,7 +87,11 @@ public abstract class Header {
         String temp = Utility.getToken(str);
         if (!temp.isEmpty()) {
             String tempSlip[] = temp.split(",");
-            mapToken.put("token", new String[]{tempSlip[0], tempSlip[1]});
+            try {
+                mapToken.put("token", new String[]{tempSlip[0], tempSlip[1]});
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Pera " + e + "\n" + str);
+            }
         } else {
             mapToken.put("token", new String[]{"", ""});
         }
@@ -123,5 +128,10 @@ public abstract class Header {
         output.append(">");
         output.append(" probability [").append(this.probability).append("]");
         return output.toString();
+
     }
+
+    
+
 }
+

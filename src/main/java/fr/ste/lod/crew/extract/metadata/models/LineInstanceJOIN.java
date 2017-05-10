@@ -19,6 +19,7 @@ import java.util.Map;
 public final class LineInstanceJOIN {
 
     private final String completeLine;
+    static String CAT_OR_REL;
 
     private final String entity;
     private final String relation;
@@ -54,6 +55,7 @@ public final class LineInstanceJOIN {
         this.probability = new ArrayList<>();
 
         listComponents = new HashMap<>();
+
     }
 
     public String organizeStringsExtraction(String str) {
@@ -106,7 +108,14 @@ public final class LineInstanceJOIN {
         this.completeLine = CompleteLine;
 
         this.candidateSource = CandidatSource;
+
+        if (relation.equals("candidate:generalizations")) {
+            CAT_OR_REL = "category";
+        } else {
+            CAT_OR_REL = "relation";
+        }
         this.setListComponents(Utility.getSTRperComponents(Utility.getCandidateSource(this.candidateSource)), this.probability);
+
     }
 
     public Map<String, Object> getListComponents() {
@@ -197,4 +206,5 @@ public final class LineInstanceJOIN {
             }
         }
     }
+
 }

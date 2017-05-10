@@ -122,6 +122,14 @@ public class LatLong {
             return temp.toString();
         }
 
+        public double[] getTokenElement2LatLong() {
+            double[] tempDouble = new double[2];
+            String tempString[] = tokenFormatedLL.toString().split(", ");
+            tempDouble[0] = Double.valueOf(tempString[1]);
+            tempDouble[1] = Double.valueOf(tempString[2]);
+            return tempDouble;
+        }
+
     }
 
     @Override
