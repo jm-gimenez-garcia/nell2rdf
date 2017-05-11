@@ -22,6 +22,7 @@ import fr.ste.lod.crew.extract.metadata.models.SEAL;
 import fr.ste.lod.crew.extract.metadata.models.Semparse;
 import fr.ste.lod.crew.extract.metadata.models.SpreadsheetEdits;
 import fr.ste.lod.crew.extract.metadata.util.Utility;
+import fr.ste.lod.crew.extract.metadata.models.ConstantList;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -66,10 +67,10 @@ public class ManipulationExecution {
                 String key = pair.getKey();
 
                 switch (key) {
-                    case :
+                    case ConstantList.ONTOLOGYMODIFIER:
                         temp.append(((OntologyModifier) pair.getValue()).toString());
                         break;
-                    case "CPL":
+                    case ConstantList.CPL:
                         temp.append(((CPL) pair.getValue()).toString());
                         /*JSON_CPL_CML jsonCPL = new JSON_CPL_CML(pair.getValue());
                         jsonCPL.setJsonObject();
@@ -81,16 +82,16 @@ public class ManipulationExecution {
                             }
                         }*/
                         break;
-                    case "SEAL":
+                    case ConstantList.SEAL:
                         temp.append(((SEAL) pair.getValue()).toString());
                         break;
-                    case "OE":
+                    case ConstantList.OE:
                         temp.append(((OE) pair.getValue()).toString());
                         break;
-                    case "CMC":
+                    case ConstantList.CMC:
                         temp.append(((CMC) pair.getValue()).toString());
                         break;
-                    case "AliasMatcher":
+                    case ConstantList.ALIASMATCHER:
                         temp.append(((AliasMatcher) pair.getValue()).toString());
                         /*  {
                             JSON_AliasMatcher jsonAlias = new JSON_AliasMatcher(pair.getValue());
@@ -101,29 +102,29 @@ public class ManipulationExecution {
                             }
                         }*/
                         break;
-                    case "MBL":
+                    case ConstantList.MBL:
                         temp.append(((MBL) pair.getValue()).toString());
                         break;
-                    case "PRA":
+                    case ConstantList.PRA:
                         temp.append(((PRA) pair.getValue()).toString());
                         break;
-                    case "RuleInference":
+                    case ConstantList.RULEINFERENCE:
                         temp.append(((RuleInference) pair.getValue()).toString());
                         break;
-                    case "KbManipulation":
+                    case ConstantList.KBMANIPULATION:
                         temp.append(((KbManipulation) pair.getValue()).toString());
                         break;
-                    case "Semparse":
+                    case ConstantList.SEMPARSE:
                         temp.append(((Semparse) pair.getValue()).toString());
                         break;
-                    case "LE":
+                    case ConstantList.LE:
                         temp.append(((LE) pair.getValue()).toString());
                         break;
-                    case "SpreadsheetEdits":
+                    case ConstantList.SPREADSHEETEDITS:
                         temp.append(((SpreadsheetEdits) pair.getValue()).toString());
                         break;
-                    case "LatLong":
-                    case "LatLongTT":
+                    case ConstantList.LATLONG:
+                    case ConstantList.LATLONGTT:
                         temp.append(((LatLong) pair.getValue()).toString());
                         break;
                     default:
