@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static fr.ste.lod.crew.extract.metadata.models.ConstantList.*;
 
 /**
  *
@@ -25,7 +26,7 @@ public class SEAL extends Header {
     private List<String> listURL;
 
     public SEAL(String str, double Probability) {
-        super(str, "SEAL", Probability);
+        super(str, SEAL, Probability);
     }
 
     public String getFrom() {

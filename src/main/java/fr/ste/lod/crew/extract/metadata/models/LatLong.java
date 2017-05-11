@@ -6,6 +6,7 @@
 package fr.ste.lod.crew.extract.metadata.models;
 
 import fr.ste.lod.crew.extract.metadata.util.Utility;
+import static fr.ste.lod.crew.extract.metadata.models.ConstantList.*;
 
 /**
  *
@@ -36,15 +37,15 @@ public class LatLong {
 
         switch (strSplit.length) {
             case 1:
-                if (strSplit[0].contains("LatLong")) {
-                    LLong = new LatLong_aux(strSplit[0].trim(), "LatLong", Probability);
-                } else if (strSplit[0].contains("LatLongTT")) {
-                    LLongTT = new LatLong_aux(strSplit[1].trim(), "LatLongTT", Probability);
+                if (strSplit[0].contains(LATLONG)) {
+                    LLong = new LatLong_aux(strSplit[0].trim(), LATLONG, Probability);
+                } else if (strSplit[0].contains(LATLONGTT)) {
+                    LLongTT = new LatLong_aux(strSplit[1].trim(), LATLONGTT, Probability);
                 }
                 break;
             case 2:
-                LLong = new LatLong_aux(strSplit[0].trim(), "LatLong", Probability);
-                LLongTT = new LatLong_aux(strSplit[1].trim(), "LatLongTT", Probability);
+                LLong = new LatLong_aux(strSplit[0].trim(), LATLONG, Probability);
+                LLongTT = new LatLong_aux(strSplit[1].trim(), LATLONGTT, Probability);
                 break;
             default:
                 System.out.println("Exceção de um trem");
@@ -78,9 +79,9 @@ public class LatLong {
         public void processStringText(String str) {
             String temp = "";
             String tempSplit[];
-            if (this.componentName.equalsIgnoreCase("LatLong")) {
+            if (this.componentName.equalsIgnoreCase(LATLONG)) {
                 temp = Utility.getLatog(str);
-            } else if (this.componentName.equalsIgnoreCase("LatLongTT")) {
+            } else if (this.componentName.equalsIgnoreCase(LATLONGTT)) {
                 temp = Utility.getLatogTT(str);
             }
 

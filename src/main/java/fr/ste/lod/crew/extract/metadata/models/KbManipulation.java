@@ -6,6 +6,7 @@
 package fr.ste.lod.crew.extract.metadata.models;
 
 import fr.ste.lod.crew.extract.metadata.util.Utility;
+import static fr.ste.lod.crew.extract.metadata.models.ConstantList.*;
 
 /**
  *
@@ -16,7 +17,7 @@ public class KbManipulation extends Header {
     private String oldBug;
 
     public KbManipulation(String str, double Probability) {
-        super(str, "KbManipulation", Probability);
+        super(str, KBMANIPULATION, Probability);
     }
 
     public String getOldBug() {

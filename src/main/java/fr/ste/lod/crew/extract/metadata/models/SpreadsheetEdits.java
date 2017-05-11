@@ -6,7 +6,7 @@
 package fr.ste.lod.crew.extract.metadata.models;
 
 import fr.ste.lod.crew.extract.metadata.util.Utility;
-
+import static fr.ste.lod.crew.extract.metadata.models.ConstantList.*;
 
 /**
  *
@@ -22,7 +22,7 @@ public class SpreadsheetEdits extends Header {
     private String from;
 
     public SpreadsheetEdits(String str, double Probability) {
-        super(str, "SpreadsheetEdits", Probability);
+        super(str, SPREADSHEETEDITS, Probability);
     }
 
     @Override

@@ -7,36 +7,22 @@ package fr.ste.lod.crew.extract.metadata.test;
 
 
 import fr.ste.lod.crew.extract.metadata.models.AliasMatcher;
-import fr.ste.lod.crew.extract.metadata.models.AliasMatcher;
 import fr.ste.lod.crew.extract.metadata.models.CMC;
-import fr.ste.lod.crew.extract.metadata.models.CMC;
-import fr.ste.lod.crew.extract.metadata.models.CPL_CML;
-import fr.ste.lod.crew.extract.metadata.models.CPL_CML;
-import fr.ste.lod.crew.extract.metadata.models.KbManipulation;
+import fr.ste.lod.crew.extract.metadata.models.CPL;
 import fr.ste.lod.crew.extract.metadata.models.KbManipulation;
 import fr.ste.lod.crew.extract.metadata.models.LE;
-import fr.ste.lod.crew.extract.metadata.models.LE;
-import fr.ste.lod.crew.extract.metadata.models.LatLong;
 import fr.ste.lod.crew.extract.metadata.models.LatLong;
 import fr.ste.lod.crew.extract.metadata.models.LineInstanceJOIN;
-import fr.ste.lod.crew.extract.metadata.models.LineInstanceJOIN;
-import fr.ste.lod.crew.extract.metadata.models.MBL;
 import fr.ste.lod.crew.extract.metadata.models.MBL;
 import fr.ste.lod.crew.extract.metadata.models.OE;
-import fr.ste.lod.crew.extract.metadata.models.OE;
-import fr.ste.lod.crew.extract.metadata.models.OntologyModifier;
 import fr.ste.lod.crew.extract.metadata.models.OntologyModifier;
 import fr.ste.lod.crew.extract.metadata.models.PRA;
-import fr.ste.lod.crew.extract.metadata.models.PRA;
-import fr.ste.lod.crew.extract.metadata.models.RuleInference;
 import fr.ste.lod.crew.extract.metadata.models.RuleInference;
 import fr.ste.lod.crew.extract.metadata.models.SEAL;
-import fr.ste.lod.crew.extract.metadata.models.SEAL;
 import fr.ste.lod.crew.extract.metadata.models.Semparse;
-import fr.ste.lod.crew.extract.metadata.models.Semparse;
-import fr.ste.lod.crew.extract.metadata.models.SpreadsheetEdits;
 import fr.ste.lod.crew.extract.metadata.models.SpreadsheetEdits;
 import fr.ste.lod.crew.extract.metadata.util.Utility;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -80,11 +66,11 @@ public class ManipulationExecution {
                 String key = pair.getKey();
 
                 switch (key) {
-                    case "OntologyModifier":
+                    case :
                         temp.append(((OntologyModifier) pair.getValue()).toString());
                         break;
                     case "CPL":
-                        temp.append(((CPL_CML) pair.getValue()).toString());
+                        temp.append(((CPL) pair.getValue()).toString());
                         /*JSON_CPL_CML jsonCPL = new JSON_CPL_CML(pair.getValue());
                         jsonCPL.setJsonObject();
                          {

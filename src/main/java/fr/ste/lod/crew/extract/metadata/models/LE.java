@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package fr.ste.lod.crew.extract.metadata.models;
+import static fr.ste.lod.crew.extract.metadata.models.ConstantList.*;
 
 /**
  *
@@ -12,7 +13,7 @@ package fr.ste.lod.crew.extract.metadata.models;
 public class LE extends Header {
 
     public LE(String str, double Probability) {
-        super(str, "LE", Probability);
+        super(str, LE, Probability);
     }
 
     @Override

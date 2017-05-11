@@ -6,6 +6,7 @@
 package fr.ste.lod.crew.extract.metadata.models;
 
 import fr.ste.lod.crew.extract.metadata.util.Utility;
+import static fr.ste.lod.crew.extract.metadata.models.ConstantList.*;
 import java.util.Date;
 
 
@@ -19,7 +20,7 @@ public class AliasMatcher extends Header {
     private Date FreebaseDate;
 
     public AliasMatcher(String str, double Probability) {
-        super(str, "AliasMatcher", Probability);
+        super(str, ALIASMATCHER, Probability);
     }
 
     @Override

@@ -8,6 +8,7 @@ package fr.ste.lod.crew.extract.metadata.models;
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 import java.util.HashMap;
 import java.util.Map;
+import static fr.ste.lod.crew.extract.metadata.models.ConstantList.*;
 
 
 public class PRA extends Header {
@@ -15,7 +16,7 @@ public class PRA extends Header {
      private Map<String, Double> mapTriple;
 
     public PRA(String str, double Probability) {
-        super(str, "PRA", Probability);
+        super(str, PRA, Probability);
     }
 
     public Map<String, Double> getMapTriple() {

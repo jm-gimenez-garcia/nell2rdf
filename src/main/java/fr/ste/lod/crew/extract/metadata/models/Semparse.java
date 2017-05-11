@@ -9,6 +9,7 @@ import fr.ste.lod.crew.extract.metadata.util.Utility;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import static fr.ste.lod.crew.extract.metadata.models.ConstantList.*;
 
 /**
  *
@@ -23,7 +24,7 @@ public class Semparse extends Header {
     }
 
     public Semparse(String str, double Probability) {
-        super(str, "Semparse", Probability);
+        super(str, SEMPARSE, Probability);
     }
 
     @Override

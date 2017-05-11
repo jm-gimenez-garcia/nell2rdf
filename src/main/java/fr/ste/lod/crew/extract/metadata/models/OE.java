@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static fr.ste.lod.crew.extract.metadata.models.ConstantList.*;
 /**
  *
  * @author Maisa
@@ -21,7 +22,7 @@ public class OE extends Header {
   private Map<String, URL> mapTextURL;
 
     public OE(String str, double Probability) {
-        super(str, "OE", Probability);
+        super(str, OE, Probability);
     }
 
     public Map<String, URL> getMapTextURL() {

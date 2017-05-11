@@ -5,6 +5,7 @@
  */
 package fr.ste.lod.crew.extract.metadata.models;
 
+import static fr.ste.lod.crew.extract.metadata.models.ConstantList.*;
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 
 
@@ -22,7 +23,7 @@ public class MBL extends Header {
     }
 
     public MBL(String str, double Probability) {
-        super(str, "MBL", Probability);
+        super(str, MBL, Probability);
     }
 
     @Override

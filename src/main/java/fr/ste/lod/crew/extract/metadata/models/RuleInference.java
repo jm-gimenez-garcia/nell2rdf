@@ -5,6 +5,7 @@
  */
 package fr.ste.lod.crew.extract.metadata.models;
 
+import static fr.ste.lod.crew.extract.metadata.models.ConstantList.RULEINFERENCE;
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 
 /**
@@ -16,7 +17,7 @@ public class RuleInference extends Header {
    private String rules;
 
     public RuleInference(String str, double Probability) {
-        super(str, "RuleInference", Probability);
+        super(str, RULEINFERENCE, Probability);
     }
 
     @Override

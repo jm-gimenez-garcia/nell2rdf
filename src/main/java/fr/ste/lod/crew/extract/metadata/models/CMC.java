@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static fr.ste.lod.crew.extract.metadata.models.ConstantList.*;
 
 /**
  *
@@ -22,7 +23,7 @@ public class CMC extends Header {
     private List<CMCObjects> cmcList;
     
     public CMC(String str, double Probability) {
-        super(str, "CMC", Probability);
+        super(str, CMC, Probability);
     }
     
     private void setCmcList(String field, float score) {

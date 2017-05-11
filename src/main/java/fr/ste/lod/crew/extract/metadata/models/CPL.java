@@ -9,19 +9,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static fr.ste.lod.crew.extract.metadata.models.ConstantList.*;
 
 /**
  *
  * @author Maisa
  */
-public class CPL_CML extends Header {
+public class CPL extends Header {
 
        private Map<String, Integer> mapMD;
     //Category or Relation?
     private String from;
 
-    public CPL_CML(String str, double Probability) {
-        super(str, "CPL", Probability);
+    public CPL(String str, double Probability) {
+        super(str, CPL, Probability);
     }
 
     public String getFrom() {

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package fr.ste.lod.crew.extract.metadata.models;
- 
+
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,10 +109,10 @@ public final class LineInstanceJOIN {
 
         this.candidateSource = CandidatSource;
 
-        if (relation.equals("candidate:generalizations")) {
-            CAT_OR_REL = "category";
+        if (relation.equals(ConstantList.LOOK_GENERALIZATIONS)) {
+            CAT_OR_REL = ConstantList.CATEGORY;
         } else {
-            CAT_OR_REL = "relation";
+            CAT_OR_REL = ConstantList.RELATION;
         }
         this.setListComponents(Utility.getSTRperComponents(Utility.getCandidateSource(this.candidateSource)), this.probability);
 
@@ -175,34 +175,48 @@ public final class LineInstanceJOIN {
         for (int i = 0; i < stringListComponents.size(); i++) {
             String line = stringListComponents.get(i);
 
-            if (line.startsWith("OntologyModifier-Iter:")) {
-                this.listComponents.put("OntologyModifier", new OntologyModifier(line, probList.get(i)));
-            } else if (line.startsWith("CPL-Iter:")) {
-                this.listComponents.put("CPL", new CPL_CML(line, probList.get(i)));
-            } else if (line.startsWith("SEAL-Iter:")) {
-                this.listComponents.put("SEAL", new SEAL(line, probList.get(i)));
-            } else if (line.startsWith("OE-Iter:")) {
-                this.listComponents.put("OE", new OE(line, probList.get(i)));
-            } else if (line.startsWith("CMC-Iter:")) {
-                this.listComponents.put("CMC", new CMC(line, probList.get(i)));
-            } else if (line.startsWith("AliasMatcher-Iter:")) {
-                this.listComponents.put("AliasMatcher", new AliasMatcher(line, probList.get(i)));
-            } else if (line.startsWith("MBL-Iter:")) {
-                this.listComponents.put("MBL", new MBL(line, probList.get(i)));
-            } else if (line.startsWith("PRA-Iter")) {
-                this.listComponents.put("PRA", new PRA(line, probList.get(i)));
-            } else if (line.startsWith("RuleInference-Iter")) {
-                this.listComponents.put("RuleInference", new RuleInference(line, probList.get(i)));
-            } else if (line.startsWith("KbManipulation-Iter")) {
-                this.listComponents.put("KbManipulation", new KbManipulation(line, probList.get(i)));
-            } else if (line.startsWith("Semparse-Iter")) {
-                this.listComponents.put("Semparse", new Semparse(line, probList.get(i)));
-            } else if (line.startsWith("LE-Iter")) {
-                this.listComponents.put("LE", new LE(line, probList.get(i)));
-            } else if (line.startsWith("SpreadsheetEdits-Iter")) {
-                this.listComponents.put("SpreadsheetEdits", new SpreadsheetEdits(line, probList.get(i)));
-            } else if ((line.startsWith("LatLong-Iter") || (line.startsWith("LatLongTT-Iter")))) {
-                this.listComponents.put("LatLong", new LatLong(line, probList.get(i)));
+            //ONTOLOGY MODIFIER
+            if (line.startsWith(ConstantList.TEXT_ONTOLOGYMODIFIER)) {
+                this.listComponents.put(ConstantList.ONTOLOGYMODIFIER, new OntologyModifier(line, probList.get(i)));
+                //ONTOLOGY CPL
+            } else if (line.startsWith(ConstantList.TEXT_CPL)) {
+                this.listComponents.put(ConstantList.CPL, new CPL(line, probList.get(i)));
+                //SEAL
+            } else if (line.startsWith(ConstantList.TEXT_SEAL)) {
+                this.listComponents.put(ConstantList.SEAL, new SEAL(line, probList.get(i)));
+                //OPEN EVAL
+            } else if (line.startsWith(ConstantList.TEXT_OE)) {
+                this.listComponents.put(ConstantList.OE, new OE(line, probList.get(i)));
+                 //CMU
+            } else if (line.startsWith(ConstantList.TEXT_CMC)) {
+                this.listComponents.put(ConstantList.CMC, new CMC(line, probList.get(i)));
+                 //ALIAS MATCHER
+            } else if (line.startsWith(ConstantList.TEXT_ALIASMATCHER)) {
+                this.listComponents.put(ConstantList.ALIASMATCHER, new AliasMatcher(line, probList.get(i)));
+                 //MBL
+            } else if (line.startsWith(ConstantList.TEXT_MBL)) {
+                this.listComponents.put(ConstantList.MBL, new MBL(line, probList.get(i)));
+                 //PRA
+            } else if (line.startsWith(ConstantList.TEXT_PRA)) {
+                this.listComponents.put(ConstantList.PRA, new PRA(line, probList.get(i)));
+                 //RULE INFERENCE
+            } else if (line.startsWith(ConstantList.TEXT_RULEINFERENCE)) {
+                this.listComponents.put(ConstantList.RULEINFERENCE, new RuleInference(line, probList.get(i)));
+                 //KB MANIPULATION
+            } else if (line.startsWith(ConstantList.TEXT_KBMANIPULATION)) {
+                this.listComponents.put(ConstantList.KBMANIPULATION, new KbManipulation(line, probList.get(i)));
+                 //SEMPARSE
+            } else if (line.startsWith(ConstantList.TEXT_SEMPARSE)) {
+                this.listComponents.put(ConstantList.SEMPARSE, new Semparse(line, probList.get(i)));
+                //LE
+            } else if (line.startsWith(ConstantList.TEXT_LE)) {
+                this.listComponents.put(ConstantList.LE, new LE(line, probList.get(i)));
+                 //SPREADSHEET EDITS
+            } else if (line.startsWith(ConstantList.TEXT_SPREADSHEETEDITS)) {
+                this.listComponents.put(ConstantList.SPREADSHEETEDITS, new SpreadsheetEdits(line, probList.get(i)));
+                //LATLONG & LATLONGTT
+            } else if ((line.startsWith(ConstantList.TEXT_LATLONG) || (line.startsWith(ConstantList.TEXT_LATLONGTT)))) {
+                this.listComponents.put(ConstantList.LATLONG, new LatLong(line, probList.get(i)));
             }
         }
     }
