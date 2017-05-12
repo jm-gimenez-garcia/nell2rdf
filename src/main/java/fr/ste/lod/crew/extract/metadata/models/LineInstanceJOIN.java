@@ -19,7 +19,7 @@ import java.util.Map;
 public final class LineInstanceJOIN {
 
     private boolean candidate;
-    private final String completeLine;
+    public static String completeLine;
     static String CAT_OR_REL;
 
     private final String entity;
@@ -93,7 +93,7 @@ public final class LineInstanceJOIN {
             CAT_OR_REL = ConstantList.RELATION;
         }
 
-        if (!"(null)".equals(this.source)) {
+        if (!(this.source.contains("null"))) {
             if (Source.contains("EntityResolverCleanup-Iter:")) {
                 tempMBLorERC = "EntityResolverCleanup";
             } else if (Source.contains("MBL-Iter:")) {
@@ -162,7 +162,7 @@ public final class LineInstanceJOIN {
     public double getProbabilityDouble() {
         return probabilityDouble;
     }
-    
+
     public void setProbability(String str) {
         String temp = str.replace("]", "").replace("[", "");
         if (temp.contains(",")) {
@@ -193,15 +193,20 @@ public final class LineInstanceJOIN {
     //Macarronada Italiana
     //Here is where the componentes are created; [ aqui
     public void setListComponents(List<String> stringListComponents, List<Double> probList) {
-        double tempProbility;
+        double tempProbility = 0;
 
         for (int i = 0; i < stringListComponents.size(); i++) {
 
             if (probList == null) {
                 tempProbility = 0.0;
             } else {
-                tempProbility = probList.get(i);
+                try {
+                    tempProbility = probList.get(i);
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.print(e);
+                }
             }
+
             String line = stringListComponents.get(i);
 
             //ONTOLOGY MODIFIER

@@ -23,6 +23,7 @@ import fr.ste.lod.crew.extract.metadata.models.Semparse;
 import fr.ste.lod.crew.extract.metadata.models.SpreadsheetEdits;
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 import fr.ste.lod.crew.extract.metadata.models.ConstantList;
+import fr.ste.lod.crew.extract.metadata.models.FormatHeader;
 import fr.ste.lod.crew.extract.metadata.models.Header;
 
 import java.io.BufferedReader;
@@ -70,6 +71,8 @@ public class ManipulationExecution {
                 switch (key) {
                     case ConstantList.ONTOLOGYMODIFIER:
                         temp.append(((OntologyModifier) pair.getValue()).toString());
+                        //FormatHeader FH = ((OntologyModifier) pair.getValue()).getFormatHeader().
+                                
                         break;
                     case ConstantList.CPL:
                         temp.append(((CPL) pair.getValue()).toString());

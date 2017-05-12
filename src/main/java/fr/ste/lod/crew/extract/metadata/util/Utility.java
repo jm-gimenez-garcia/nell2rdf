@@ -5,6 +5,7 @@
  */
 package fr.ste.lod.crew.extract.metadata.util;
 
+import fr.ste.lod.crew.extract.metadata.models.LineInstanceJOIN;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -94,10 +95,19 @@ public class Utility {
         } else {
             pattern = Pattern.compile(REGEX_DATETIME_OLD);
             matcher = pattern.matcher(str);
-            matcher.find();
-            temp = matcher.group();
-            //return setDatetimeFormat("yyyy-MM-dd hh:mm:ss", temp);
-            temp = (temp.trim().replace(":", "-").replace(" ", "-").replace(":", "-")).trim();
+            if (matcher.find()) {
+
+                try {
+                    temp = matcher.group();
+                } catch (IllegalStateException e) {
+                    System.out.println(LineInstanceJOIN.completeLine);
+                }
+                //return setDatetimeFormat("yyyy-MM-dd hh:mm:ss", temp);
+                temp = (temp.trim().replace(":", "-").replace(" ", "-").replace(":", "-")).trim();
+            } else {
+                System.out.println("thinh");
+                return null;
+            }
         }
         return setDateTimeFormat(temp);
     }
@@ -142,7 +152,7 @@ public class Utility {
         try {
             date = simpleDateFormat.parse(simpleDateFormat.format(gcalendar.getTime()));
         } catch (ParseException ex) {
-            System.out.println("Problema com a formatação de data " + dateSTR + " " + ex);
+            System.out.println("Problema A" + dateSTR + " " + ex);
         }
         //System.out.println("UTC:     " + simpleDateFormat.format(gcalendar.getTime()));
         return date;
@@ -169,7 +179,7 @@ public class Utility {
         try {
             date = simpleDateFormat.parse(simpleDateFormat.format(gcalendar.getTime()));
         } catch (ParseException ex) {
-            System.out.println("Problema com a formatação de data " + dateSTR + " " + ex);
+            //System.out.println("Problema com a formataï¿½o de data " + dateSTR + " " + ex);
         }
         //System.out.println("UTC:     " + simpleDateFormat.format(gcalendar.getTime()));
         return date;
@@ -280,7 +290,7 @@ public class Utility {
         temp = temp.replace(", LE-Iter:", " #,# LE-Iter:");
         temp = temp.replace(", SpreadsheetEdits-Iter:", " #,# SpreadsheetEdits-Iter:");
         temp = temp.replace(", LatLong-Iter:", " #,# LatLong-Iter:");
-        temp = temp.replace(", LatLongTT-Iter:"," #,# LLatLongTT-Iter:");
+        temp = temp.replace(", LatLongTT-Iter:", " #,# LLatLongTT-Iter:");
 
         return temp;
     }
