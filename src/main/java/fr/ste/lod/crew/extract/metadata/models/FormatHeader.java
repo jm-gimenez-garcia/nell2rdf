@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-class FormatHeader {
+public class FormatHeader {
 
     private String componentName;
     protected Map<String, String> tokenFormated = new HashMap<>();
