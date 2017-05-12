@@ -187,36 +187,38 @@ public final class LineInstanceJOIN {
                 //OPEN EVAL
             } else if (line.startsWith(ConstantList.TEXT_OE)) {
                 this.listComponents.put(ConstantList.OE, new OE(line, probList.get(i)));
-                 //CMU
+                //CMU
             } else if (line.startsWith(ConstantList.TEXT_CMC)) {
                 this.listComponents.put(ConstantList.CMC, new CMC(line, probList.get(i)));
-                 //ALIAS MATCHER
+                //ALIAS MATCHER
             } else if (line.startsWith(ConstantList.TEXT_ALIASMATCHER)) {
                 this.listComponents.put(ConstantList.ALIASMATCHER, new AliasMatcher(line, probList.get(i)));
-                 //MBL
+                //MBL
             } else if (line.startsWith(ConstantList.TEXT_MBL)) {
                 this.listComponents.put(ConstantList.MBL, new MBL(line, probList.get(i)));
-                 //PRA
+                //PRA
             } else if (line.startsWith(ConstantList.TEXT_PRA)) {
                 this.listComponents.put(ConstantList.PRA, new PRA(line, probList.get(i)));
-                 //RULE INFERENCE
+                //RULE INFERENCE
             } else if (line.startsWith(ConstantList.TEXT_RULEINFERENCE)) {
                 this.listComponents.put(ConstantList.RULEINFERENCE, new RuleInference(line, probList.get(i)));
-                 //KB MANIPULATION
+                //KB MANIPULATION
             } else if (line.startsWith(ConstantList.TEXT_KBMANIPULATION)) {
                 this.listComponents.put(ConstantList.KBMANIPULATION, new KbManipulation(line, probList.get(i)));
-                 //SEMPARSE
+                //SEMPARSE
             } else if (line.startsWith(ConstantList.TEXT_SEMPARSE)) {
                 this.listComponents.put(ConstantList.SEMPARSE, new Semparse(line, probList.get(i)));
                 //LE
             } else if (line.startsWith(ConstantList.TEXT_LE)) {
                 this.listComponents.put(ConstantList.LE, new LE(line, probList.get(i)));
-                 //SPREADSHEET EDITS
+                //SPREADSHEET EDITS
             } else if (line.startsWith(ConstantList.TEXT_SPREADSHEETEDITS)) {
                 this.listComponents.put(ConstantList.SPREADSHEETEDITS, new SpreadsheetEdits(line, probList.get(i)));
                 //LATLONG & LATLONGTT
-            } else if ((line.startsWith(ConstantList.TEXT_LATLONG) || (line.startsWith(ConstantList.TEXT_LATLONGTT)))) {
-                this.listComponents.put(ConstantList.LATLONG, new LatLong(line, probList.get(i)));
+            } else if (line.startsWith(ConstantList.TEXT_LATLONG)) {
+                this.listComponents.put(ConstantList.LATLONG, new LatLong(line, ConstantList.LATLONG, probList.get(i)));
+            } else if (line.startsWith(ConstantList.TEXT_LATLONGTT)) {
+                this.listComponents.put(ConstantList.LATLONGTT, new LatLong(line, ConstantList.LATLONGTT, probList.get(i)));
             }
         }
     }

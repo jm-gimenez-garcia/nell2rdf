@@ -280,8 +280,7 @@ public class Utility {
         temp = temp.replace(", LE-Iter:", " #,# LE-Iter:");
         temp = temp.replace(", SpreadsheetEdits-Iter:", " #,# SpreadsheetEdits-Iter:");
         temp = temp.replace(", LatLong-Iter:", " #,# LatLong-Iter:");
-        //Like this because this is the unique componente that has twice of the format + Header
-        temp = temp.replace(", LatLongTT-Iter:", "#LLatLongTT-Iter:");
+        temp = temp.replace(", LatLongTT-Iter:"," #,# LLatLongTT-Iter:");
 
         return temp;
     }

@@ -131,7 +131,5 @@ public abstract class Header extends FormatComponent{
 
     }
 
-    
-
 }
 
