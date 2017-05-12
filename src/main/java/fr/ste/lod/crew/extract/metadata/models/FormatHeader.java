@@ -9,21 +9,50 @@ package fr.ste.lod.crew.extract.metadata.models;
  *
  * @author Maisa
  */
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-class FormatComponent {
+class FormatHeader {
 
     private String componentName;
     protected Map<String, String> tokenFormated = new HashMap<>();
     protected Map<String, Double[]> tokenFormatedLL = new HashMap<>();
 
-    String FROM = "FROM";
-    String ELEMENT1 = "element1";
-    String ELEMENT2 = "element2";
-    String TOKEN = "token";
+    private final String FROM = "FROM";
+    private final String ELEMENT1 = "element1";
+    private final String ELEMENT2 = "element2";
+    private final String TOKEN = "token";
 
     TokenModel tokenmodel;
+
+    private int tempIteration;
+    private double tempProbability;
+    private Date tempDateTime;
+
+    public int getTempIteration() {
+        return tempIteration;
+    }
+
+    public double getTempProbability() {
+        return tempProbability;
+    }
+
+    public Date getTempDateTime() {
+        return tempDateTime;
+    }
+
+    public void setTempDateTime(Date tempDateTime) {
+        this.tempDateTime = tempDateTime;
+    }
+
+    public void setTempIteration(int tempIteration) {
+        this.tempIteration = tempIteration;
+    }
+
+    public void setTempProbability(double tempProbability) {
+        this.tempProbability = tempProbability;
+    }
 
     public void formattingHeaderToken(Map<String, String[]> in, String componentName) {
         this.componentName = componentName;
@@ -70,4 +99,13 @@ class FormatComponent {
     public TokenModel getTokenmodel() {
         return tokenmodel;
     }
+
+    public double[] getTokenElement2LatLong() {
+        double[] tempDouble = new double[2];
+        String tempString[] = tokenFormatedLL.toString().split(", ");
+        tempDouble[0] = Double.valueOf(tempString[1]);
+        tempDouble[1] = Double.valueOf(tempString[2]);
+        return tempDouble;
+    }
+
 }

@@ -17,8 +17,9 @@ import java.util.logging.Logger;
  *
  * @author Maisa
  */
-public abstract class Header extends FormatComponent{
+public abstract class Header {
 
+    FormatHeader formatHeader;
     private String source;
     protected String componentName;
     private int iteration;
@@ -55,7 +56,14 @@ public abstract class Header extends FormatComponent{
         this.setIteration(str);
 
         setToken(str);
-        formattingHeaderToken(mapToken, componentName);
+
+        //POG
+        formatHeader = new FormatHeader();
+        formatHeader.formattingHeaderToken(mapToken, componentName);
+        formatHeader.setTempDateTime(dateTime);
+        formatHeader.setTempIteration(iteration);
+        formatHeader.setTempProbability(probability);
+        //END POG
 
     }
 
@@ -131,5 +139,8 @@ public abstract class Header extends FormatComponent{
 
     }
 
-}
+    public FormatHeader getFormatHeader() {
+        return formatHeader;
+    }
 
+}
