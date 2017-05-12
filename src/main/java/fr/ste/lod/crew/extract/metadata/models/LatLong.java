@@ -13,13 +13,13 @@ import fr.ste.lod.crew.extract.metadata.util.Utility;
  */
 public class LatLong extends Header {
 
-    public LatLong(String str,String ComponentName, double Probability) {
+    public LatLong(String str, String ComponentName, double Probability) {
         super(str, ComponentName, Probability);
     }
 
     @Override
     public void processStringText(String str) {
-      /*  if (this.componentName.equalsIgnoreCase(LATLONG)) {
+        /*  if (this.componentName.equalsIgnoreCase(LATLONG)) {
             temp = Utility.getLatog(str);
         } else if (this.componentName.equalsIgnoreCase(LATLONGTT)) {
             temp = Utility.getLatogTT(str);
@@ -39,7 +39,9 @@ public class LatLong extends Header {
     public String toString() {
         StringBuffer temp = new StringBuffer();
         temp.append("[").append("[ComponentName: ").append(this.componentName).append(" {");
-        temp.append(mapToken.toString()).append("}");
+        temp.append(mapToken.get("token")[0]).append(",")
+                .append(mapToken.get("token")[1]).append(",")
+                .append(mapToken.get("token")[2]).append("}");
         return super.toString() + temp.toString();
     }
 
@@ -47,7 +49,9 @@ public class LatLong extends Header {
     public String getStringSource() {
         StringBuffer temp = new StringBuffer();
         temp.append("[").append("[ComponentName: ").append(this.componentName).append(" {");
-        temp.append(mapToken.toString()).append("}");
+        temp.append(mapToken.get("token")[0]).append(",")
+                .append(mapToken.get("token")[1]).append(",")
+                .append(mapToken.get("token")[2]).append("}");
         return temp.toString();
     }
 
