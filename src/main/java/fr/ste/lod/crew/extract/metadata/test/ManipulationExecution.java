@@ -23,6 +23,7 @@ import fr.ste.lod.crew.extract.metadata.models.Semparse;
 import fr.ste.lod.crew.extract.metadata.models.SpreadsheetEdits;
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 import fr.ste.lod.crew.extract.metadata.models.ConstantList;
+import fr.ste.lod.crew.extract.metadata.models.Header;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -46,7 +47,7 @@ public class ManipulationExecution {
         LI = new LineInstanceJOIN(split[0], split[1], split[2], split[3], split[4],
                 Utility.DecodeURL(split[5]), split[6], split[7],
                 split[8], split[9], split[10],
-                split[11], Utility.DecodeURL(split[12]), line);
+                split[11], Utility.DecodeURL(split[12]), line, true);
     }
 
     public void readNELLcsv(String pathIN, String pathOUT) throws FileNotFoundException, IOException {
@@ -60,7 +61,7 @@ public class ManipulationExecution {
 
         while ((line = reader.readLine()) != null) {
             setFeatures(line);
-            Map<String, Object> p = LI.getListComponents();
+            Map<String, Header> p = LI.getListComponents();
 
             temp.append("START: \t");
             p.entrySet().forEach((pair) -> {

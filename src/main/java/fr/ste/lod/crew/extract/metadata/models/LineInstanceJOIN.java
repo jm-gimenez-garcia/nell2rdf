@@ -45,7 +45,7 @@ public final class LineInstanceJOIN {
     private List<String> categoriesForValue;
 
     private final String candidateSource;
-    private Map<String, Object> listComponents;
+    private Map<String, Header> listComponents;
 
     public void inicilizeObjets() {
         this.entityLiteralStrings = new ArrayList<>();
@@ -127,7 +127,7 @@ public final class LineInstanceJOIN {
 
     }
 
-    public Map<String, Object> getListComponents() {
+    public Map<String, Header> getListComponents() {
         return listComponents;
     }
 
@@ -155,6 +155,14 @@ public final class LineInstanceJOIN {
         candidate = temp.contains("[");
     }
 
+    public int getNrIterationsInt() {
+        return nrIterationsInt;
+    }
+
+    public double getProbabilityDouble() {
+        return probabilityDouble;
+    }
+    
     public void setProbability(String str) {
         String temp = str.replace("]", "").replace("[", "");
         if (temp.contains(",")) {

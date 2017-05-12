@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public abstract class Header {
 
-    FormatHeader formatHeader;
+    public FormatHeader formatHeader;
     private String source;
     protected String componentName;
     private int iteration;
