@@ -13,13 +13,15 @@ public class WriteNell {
 	private boolean turtle;
 	private boolean rdfxml;
 	private String output;
+	private String metadata;
 
-	public WriteNell(Model model, boolean rdfxml, boolean turtle, boolean n3, String filename) {
+	public WriteNell(Model model, boolean rdfxml, boolean turtle, boolean n3, String filename, String metadata) {
 		this.model = model;
 		this.rdfxml = rdfxml;
 		this.turtle = turtle;
 		this.n3 = n3;
 		this.output = filename;
+		this.metadata = metadata;
 	}
 
 	public void write() {
