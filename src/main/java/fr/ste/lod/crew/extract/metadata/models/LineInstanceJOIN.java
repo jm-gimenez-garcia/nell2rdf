@@ -18,6 +18,7 @@ import java.util.Map;
  */
 public final class LineInstanceJOIN {
 
+    private boolean candidate;
     private final String completeLine;
     static String CAT_OR_REL;
 
@@ -26,8 +27,10 @@ public final class LineInstanceJOIN {
     private final String value;
 
     private List<Integer> nrIterations = new ArrayList<>();
-
     private List<Double> probability;
+
+    private int nrIterationsInt;
+    private double probabilityDouble;
 
     //Object Responsable for the Source Column
     private final String source;
@@ -55,7 +58,6 @@ public final class LineInstanceJOIN {
         this.probability = new ArrayList<>();
 
         listComponents = new HashMap<>();
-
     }
 
     public String organizeStringsExtraction(String str) {
@@ -74,12 +76,22 @@ public final class LineInstanceJOIN {
     public LineInstanceJOIN(String Entity, String Relation, String Value, String Iteration,
             String probabilityPROMOTION, String Source, String EntityLiteralStrings,
             String ValueLiteralStrings, String BestEntityLiteralString, String BestValueLiteralString,
-            String CategoriesForEntity, String CategoriesForValue, String CandidatSource, String CompleteLine) {
+            String CategoriesForEntity, String CategoriesForValue, String CandidatSource, String CompleteLine, boolean candidate) {
 
         this.inicilizeObjets();
 
         String tempMBLorERC = "";
         this.source = Source;
+
+        this.entity = Entity;
+        this.relation = Relation;
+        this.value = Value;
+
+        if (relation.contains(ConstantList.LOOK_GENERALIZATIONS)) {
+            CAT_OR_REL = ConstantList.CATEGORY;
+        } else {
+            CAT_OR_REL = ConstantList.RELATION;
+        }
 
         if (!"(null)".equals(this.source)) {
             if (Source.contains("EntityResolverCleanup-Iter:")) {
@@ -92,12 +104,14 @@ public final class LineInstanceJOIN {
             this.MBL_source = new MBL_OR_ERC(Source, tempMBLorERC);
         }
 
-        this.entity = Entity;
-        this.relation = Relation;
-        this.value = Value;
-        this.setProbability(probabilityPROMOTION);
-        this.setIterations(Iteration);
-
+        if (candidate) {
+            this.setProbability(probabilityPROMOTION);
+            this.setIterations(Iteration);
+        } else {
+            this.probabilityDouble = Double.valueOf(probabilityPROMOTION.trim());
+            this.nrIterationsInt = Integer.valueOf(Iteration.trim());
+            this.probability = null;
+        }
         this.entityLiteralStrings.addAll(Arrays.asList(organizeStringsExtraction(EntityLiteralStrings).split(",")));
         this.valueLiteralStrings.addAll(Arrays.asList(organizeStringsExtraction(ValueLiteralStrings).split(",")));
         this.bestEntityLiteralString.addAll(Arrays.asList(organizeStringsExtraction(BestEntityLiteralString).split(",")));
@@ -109,11 +123,6 @@ public final class LineInstanceJOIN {
 
         this.candidateSource = CandidatSource;
 
-        if (relation.equals(ConstantList.LOOK_GENERALIZATIONS)) {
-            CAT_OR_REL = ConstantList.CATEGORY;
-        } else {
-            CAT_OR_REL = ConstantList.RELATION;
-        }
         this.setListComponents(Utility.getSTRperComponents(Utility.getCandidateSource(this.candidateSource)), this.probability);
 
     }
@@ -142,6 +151,10 @@ public final class LineInstanceJOIN {
         return nrIterations;
     }
 
+    public void IsCandidate(String temp) {
+        candidate = temp.contains("[");
+    }
+
     public void setProbability(String str) {
         String temp = str.replace("]", "").replace("[", "");
         if (temp.contains(",")) {
@@ -156,6 +169,7 @@ public final class LineInstanceJOIN {
     }
 
     public void setIterations(String str) {
+
         String temp = str.replace("]", "").replace("[", "");
         if (temp.contains(",")) {
             String strSplit[];
@@ -171,56 +185,62 @@ public final class LineInstanceJOIN {
     //Macarronada Italiana
     //Here is where the componentes are created; [ aqui
     public void setListComponents(List<String> stringListComponents, List<Double> probList) {
+        double tempProbility;
 
         for (int i = 0; i < stringListComponents.size(); i++) {
+
+            if (probList == null) {
+                tempProbility = 0.0;
+            } else {
+                tempProbility = probList.get(i);
+            }
             String line = stringListComponents.get(i);
 
             //ONTOLOGY MODIFIER
             if (line.startsWith(ConstantList.TEXT_ONTOLOGYMODIFIER)) {
-                this.listComponents.put(ConstantList.ONTOLOGYMODIFIER, new OntologyModifier(line, probList.get(i)));
+                this.listComponents.put(ConstantList.ONTOLOGYMODIFIER, new OntologyModifier(line, tempProbility));
                 //ONTOLOGY CPL
             } else if (line.startsWith(ConstantList.TEXT_CPL)) {
-                this.listComponents.put(ConstantList.CPL, new CPL(line, probList.get(i)));
+                this.listComponents.put(ConstantList.CPL, new CPL(line, tempProbility));
                 //SEAL
             } else if (line.startsWith(ConstantList.TEXT_SEAL)) {
-                this.listComponents.put(ConstantList.SEAL, new SEAL(line, probList.get(i)));
+                this.listComponents.put(ConstantList.SEAL, new SEAL(line, tempProbility));
                 //OPEN EVAL
             } else if (line.startsWith(ConstantList.TEXT_OE)) {
-                this.listComponents.put(ConstantList.OE, new OE(line, probList.get(i)));
+                this.listComponents.put(ConstantList.OE, new OE(line, tempProbility));
                 //CMU
             } else if (line.startsWith(ConstantList.TEXT_CMC)) {
-                this.listComponents.put(ConstantList.CMC, new CMC(line, probList.get(i)));
+                this.listComponents.put(ConstantList.CMC, new CMC(line, tempProbility));
                 //ALIAS MATCHER
             } else if (line.startsWith(ConstantList.TEXT_ALIASMATCHER)) {
-                this.listComponents.put(ConstantList.ALIASMATCHER, new AliasMatcher(line, probList.get(i)));
+                this.listComponents.put(ConstantList.ALIASMATCHER, new AliasMatcher(line, tempProbility));
                 //MBL
             } else if (line.startsWith(ConstantList.TEXT_MBL)) {
-                this.listComponents.put(ConstantList.MBL, new MBL(line, probList.get(i)));
+                this.listComponents.put(ConstantList.MBL, new MBL(line, tempProbility));
                 //PRA
             } else if (line.startsWith(ConstantList.TEXT_PRA)) {
-                this.listComponents.put(ConstantList.PRA, new PRA(line, probList.get(i)));
+                this.listComponents.put(ConstantList.PRA, new PRA(line, tempProbility));
                 //RULE INFERENCE
             } else if (line.startsWith(ConstantList.TEXT_RULEINFERENCE)) {
-                this.listComponents.put(ConstantList.RULEINFERENCE, new RuleInference(line, probList.get(i)));
+                this.listComponents.put(ConstantList.RULEINFERENCE, new RuleInference(line, tempProbility));
                 //KB MANIPULATION
             } else if (line.startsWith(ConstantList.TEXT_KBMANIPULATION)) {
-                this.listComponents.put(ConstantList.KBMANIPULATION, new KbManipulation(line, probList.get(i)));
+                this.listComponents.put(ConstantList.KBMANIPULATION, new KbManipulation(line, tempProbility));
                 //SEMPARSE
             } else if (line.startsWith(ConstantList.TEXT_SEMPARSE)) {
-                this.listComponents.put(ConstantList.SEMPARSE, new Semparse(line, probList.get(i)));
+                this.listComponents.put(ConstantList.SEMPARSE, new Semparse(line, tempProbility));
                 //LE
             } else if (line.startsWith(ConstantList.TEXT_LE)) {
-                this.listComponents.put(ConstantList.LE, new LE(line, probList.get(i)));
+                this.listComponents.put(ConstantList.LE, new LE(line, tempProbility));
                 //SPREADSHEET EDITS
             } else if (line.startsWith(ConstantList.TEXT_SPREADSHEETEDITS)) {
-                this.listComponents.put(ConstantList.SPREADSHEETEDITS, new SpreadsheetEdits(line, probList.get(i)));
+                this.listComponents.put(ConstantList.SPREADSHEETEDITS, new SpreadsheetEdits(line, tempProbility));
                 //LATLONG & LATLONGTT
             } else if (line.startsWith(ConstantList.TEXT_LATLONG)) {
-                this.listComponents.put(ConstantList.LATLONG, new LatLong(line, ConstantList.LATLONG, probList.get(i)));
+                this.listComponents.put(ConstantList.LATLONG, new LatLong(line, ConstantList.LATLONG, tempProbility));
             } else if (line.startsWith(ConstantList.TEXT_LATLONGTT)) {
-                this.listComponents.put(ConstantList.LATLONGTT, new LatLong(line, ConstantList.LATLONGTT, probList.get(i)));
+                this.listComponents.put(ConstantList.LATLONGTT, new LatLong(line, ConstantList.LATLONGTT, tempProbility));
             }
         }
     }
-
 }

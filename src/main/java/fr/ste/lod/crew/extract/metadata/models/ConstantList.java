@@ -13,7 +13,7 @@ public abstract class ConstantList {
 
     public final static String RELATION = "relation";
     public final static String CATEGORY = "category";
-    public final static String LOOK_GENERALIZATIONS = "candidate:generalizations";
+    public final static String LOOK_GENERALIZATIONS = "generalizations";
 
     public final static String ONTOLOGYMODIFIER = "OntologyModifier";
     public final static String CPL = "CPL";
