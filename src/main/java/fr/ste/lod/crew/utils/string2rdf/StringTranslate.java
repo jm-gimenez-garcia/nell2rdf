@@ -268,7 +268,7 @@ public class StringTranslate {
 
             if (V.getStringSource() != null) {
                 predicate_λ = model.getProperty(this.provenanceOntologyBase + ConstantList.PROPERTY_SOURCE);
-                object_λ = model.createTypedLiteral(V.getStringSource(), XSDDatatype.XSDstring);
+                object_λ = model.createTypedLiteral(V.getStringSource().trim(), XSDDatatype.XSDstring);
                 componentIteration.asResource().addProperty(predicate_λ, object_λ);
             }
 
