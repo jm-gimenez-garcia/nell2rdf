@@ -234,7 +234,7 @@ public class StringTranslate {
 
             // Add probability
             predicate = this.model.getProperty(this.provenanceOntologyBase + ConstantList.PROPERTY_PROBABILITY_OF_BELIEF);
-            object = this.model.createTypedLiteral(metadata.getProbabilityDouble());
+            object = this.model.createTypedLiteral(metadata.getProbabilityDouble(), XSDDatatype.XSDdecimal);
             resource.addProperty(predicate, object);
         }
 
