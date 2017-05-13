@@ -287,9 +287,11 @@ public class StringTranslate {
                 componentIteration.asResource().addProperty(predicate_λ,object_λ);
             }
 
-            predicate_λ = model.getProperty(PREFIX_PROVENANCE_ONTOLOGY, PROPERTY_SOURCE);
-            object_λ = model.createTypedLiteral(V.getSource(), XSDDatatype.XSDstring);
-            componentIteration.asResource().addProperty(predicate_λ, object_λ);
+            if (V.getStringSource() != null) {
+                predicate_λ = model.getProperty(PREFIX_PROVENANCE_ONTOLOGY, PROPERTY_SOURCE);
+                object_λ = model.createTypedLiteral(V.getStringSource(), XSDDatatype.XSDstring);
+                componentIteration.asResource().addProperty(predicate_λ, object_λ);
+            }
 
             // Create Token
             RDFNode token;
