@@ -10,8 +10,6 @@ package fr.ste.lod.crew.extract.metadata.models;
  * @author Maisa
  */
 import fr.ste.lod.crew.extract.metadata.util.ConstantList;
-
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +28,7 @@ public class FormatHeader {
 
     private int tempIteration;
     private double tempProbability;
-    private Date tempDateTime;
+    private String tempDateTime;
 
     public int getTempIteration() {
         return tempIteration;
@@ -40,11 +38,11 @@ public class FormatHeader {
         return tempProbability;
     }
 
-    public Date getTempDateTime() {
+    public String getTempDateTime() {
         return tempDateTime;
     }
 
-    public void setTempDateTime(Date tempDateTime) {
+    public void setTempDateTime(String tempDateTime) {
         this.tempDateTime = tempDateTime;
     }
 

@@ -5,7 +5,6 @@
  */
 package fr.ste.lod.crew.extract.metadata.test;
 
-
 import fr.ste.lod.crew.extract.metadata.models.AliasMatcher;
 import fr.ste.lod.crew.extract.metadata.models.CMC;
 import fr.ste.lod.crew.extract.metadata.models.CPL;
@@ -67,12 +66,12 @@ public class ManipulationExecution {
             temp.append("START: \t");
             p.entrySet().forEach((pair) -> {
                 String key = pair.getKey();
-
+                System.out.println(((Header) pair.getValue()).getDateTime());
                 switch (key) {
                     case ConstantList.ONTOLOGYMODIFIER:
-                        temp.append(((OntologyModifier) pair.getValue()).toString());
+                        temp.append(((OntologyModifier) pair.getValue()));
                         //FormatHeader FH = ((OntologyModifier) pair.getValue()).getFormatHeader().
-                                
+
                         break;
                     case ConstantList.CPL:
                         temp.append(((CPL) pair.getValue()).toString());

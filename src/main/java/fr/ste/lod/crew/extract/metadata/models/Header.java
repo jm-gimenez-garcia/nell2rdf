@@ -7,7 +7,6 @@ package fr.ste.lod.crew.extract.metadata.models;
 
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -26,7 +25,7 @@ public abstract class Header {
 
     private double probability;
 
-    private Date dateTime;
+    private String dateTime;
 
     protected Map<String, String[]> mapToken;
 
@@ -75,7 +74,7 @@ public abstract class Header {
         return iteration;
     }
 
-    public Date getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 

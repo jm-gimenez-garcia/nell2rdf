@@ -15,12 +15,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -83,7 +82,7 @@ public class Utility {
         return temp.trim();
     }
 
-    public static Date getDateTime(String str) throws ParseException {
+    public static String getDateTime(String str) throws ParseException {
 
         Pattern pattern = Pattern.compile(REGEX_DATETIME_NEW);
         Matcher matcher = pattern.matcher(str);
@@ -129,9 +128,27 @@ public class Utility {
         return dateteste;
     }
 
+    //NOT USING
+    public static String getDateString(String dateSTR) {
+        String dateTemp[] = dateSTR.split("-");
+        String temp = "";
+        temp = dateTemp[0] + "/" + dateTemp[1] + "/" + dateTemp[2] + " " + dateTemp[3] + ":" + dateTemp[4] + ":" + dateTemp[5];
+        return temp;
+    }
+
+    public static String setDateTimeFormat(String dateSTR) {
+        String dateTemp[] = dateSTR.split("-");
+        String temp = "";
+        temp = dateTemp[0] + "/" + dateTemp[1] + "/" + dateTemp[2] + " " + dateTemp[3] + ":" + dateTemp[4] + ":" + dateTemp[5];
+        return temp;
+    }
+
+    /*
     public static Date setDateTimeFormat(String dateSTR) {
+
+        System.out.println(getDateString(dateSTR));
         Date date = new Date();
-        TimeZone tz = TimeZone.getTimeZone("UTC");
+        TimeZone tz = TimeZone.getTimeZone("US/Eastern");
         TimeZone.setDefault(tz);
 
         String dateTemp[] = dateSTR.split("-");
@@ -144,6 +161,7 @@ public class Utility {
         int ml = Integer.valueOf(dateTemp[5]);
 
         GregorianCalendar gcalendar = new GregorianCalendar();
+
         //gcalendar.set(2017, (1 - 1), 01, 16, 30, 01);
         gcalendar.set(year, (month - 1), day, m, s, ml);
 
@@ -157,7 +175,7 @@ public class Utility {
         //System.out.println("UTC:     " + simpleDateFormat.format(gcalendar.getTime()));
         return date;
     }
-
+     */
     public static Date setDateTimeFormatFreebase(String dateSTR) {
         Date date = new Date();
         TimeZone tz = TimeZone.getTimeZone("UTC");
