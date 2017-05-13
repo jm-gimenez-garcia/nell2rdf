@@ -9,7 +9,7 @@ import fr.ste.lod.crew.extract.metadata.util.Utility;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import static fr.ste.lod.crew.extract.metadata.models.ConstantList.*;
+import static fr.ste.lod.crew.extract.metadata.util.ConstantList.*;
 
 /**
  *

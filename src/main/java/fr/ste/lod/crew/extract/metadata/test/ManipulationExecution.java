@@ -22,8 +22,7 @@ import fr.ste.lod.crew.extract.metadata.models.SEAL;
 import fr.ste.lod.crew.extract.metadata.models.Semparse;
 import fr.ste.lod.crew.extract.metadata.models.SpreadsheetEdits;
 import fr.ste.lod.crew.extract.metadata.util.Utility;
-import fr.ste.lod.crew.extract.metadata.models.ConstantList;
-import fr.ste.lod.crew.extract.metadata.models.FormatHeader;
+import fr.ste.lod.crew.extract.metadata.util.ConstantList;
 import fr.ste.lod.crew.extract.metadata.models.Header;
 
 import java.io.BufferedReader;

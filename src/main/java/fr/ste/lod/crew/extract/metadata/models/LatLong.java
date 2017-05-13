@@ -5,8 +5,8 @@
  */
 package fr.ste.lod.crew.extract.metadata.models;
 
-import static fr.ste.lod.crew.extract.metadata.models.ConstantList.LATLONG;
-import static fr.ste.lod.crew.extract.metadata.models.ConstantList.LATLONGTT;
+import static fr.ste.lod.crew.extract.metadata.util.ConstantList.LATLONG;
+import static fr.ste.lod.crew.extract.metadata.util.ConstantList.LATLONGTT;
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 
 /**

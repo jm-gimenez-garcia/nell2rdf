@@ -8,7 +8,7 @@ package fr.ste.lod.crew.extract.metadata.models;
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 import java.util.HashMap;
 import java.util.Map;
-import static fr.ste.lod.crew.extract.metadata.models.ConstantList.*;
+import static fr.ste.lod.crew.extract.metadata.util.ConstantList.*;
 
 
 public class PRA extends Header {

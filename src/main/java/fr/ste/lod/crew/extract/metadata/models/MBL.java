@@ -5,7 +5,7 @@
  */
 package fr.ste.lod.crew.extract.metadata.models;
 
-import static fr.ste.lod.crew.extract.metadata.models.ConstantList.*;
+import static fr.ste.lod.crew.extract.metadata.util.ConstantList.*;
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 
 

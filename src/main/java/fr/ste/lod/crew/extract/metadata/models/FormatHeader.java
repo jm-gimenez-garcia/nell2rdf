@@ -9,6 +9,8 @@ package fr.ste.lod.crew.extract.metadata.models;
  *
  * @author Maisa
  */
+import fr.ste.lod.crew.extract.metadata.util.ConstantList;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

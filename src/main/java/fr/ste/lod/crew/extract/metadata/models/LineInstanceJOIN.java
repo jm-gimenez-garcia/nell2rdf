@@ -5,6 +5,7 @@
  */
 package fr.ste.lod.crew.extract.metadata.models;
 
+import fr.ste.lod.crew.extract.metadata.util.ConstantList;
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -209,10 +210,10 @@ public final class LineInstanceJOIN {
 
             String line = stringListComponents.get(i);
 
-            //ONTOLOGY MODIFIER
+            //NAMESPACE_ONTOLOGY MODIFIER
             if (line.startsWith(ConstantList.TEXT_ONTOLOGYMODIFIER)) {
                 this.listComponents.put(ConstantList.ONTOLOGYMODIFIER, new OntologyModifier(line, tempProbility));
-                //ONTOLOGY CPL
+                //NAMESPACE_ONTOLOGY CPL
             } else if (line.startsWith(ConstantList.TEXT_CPL)) {
                 this.listComponents.put(ConstantList.CPL, new CPL(line, tempProbility));
                 //SEAL

@@ -5,7 +5,7 @@
  */
 package fr.ste.lod.crew.extract.metadata.models;
 
-import static fr.ste.lod.crew.extract.metadata.models.ConstantList.RULEINFERENCE;
+import static fr.ste.lod.crew.extract.metadata.util.ConstantList.RULEINFERENCE;
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 
 /**

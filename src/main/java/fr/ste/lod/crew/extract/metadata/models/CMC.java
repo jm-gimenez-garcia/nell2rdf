@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import static fr.ste.lod.crew.extract.metadata.models.ConstantList.*;
+import static fr.ste.lod.crew.extract.metadata.util.ConstantList.*;
 
 /**
  *
