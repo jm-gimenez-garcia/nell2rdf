@@ -118,4 +118,5 @@ public class FormatHeader {
         }
         return tempDouble;
     }
+
 }

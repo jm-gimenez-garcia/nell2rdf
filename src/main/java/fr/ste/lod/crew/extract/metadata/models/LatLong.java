@@ -21,6 +21,11 @@ public class LatLong extends Header {
         super(str, ComponentName, Probability);
     }
 
+    public String getRules() {
+        return rules;
+    }
+    
+    
     @Override
     public void processStringText(String str) {
         String temp = "";
@@ -47,7 +52,8 @@ public class LatLong extends Header {
         temp.append("[").append("[ComponentName: ").append(this.componentName).append(" {");
         temp.append(mapToken.get("token")[0]).append(",")
                 .append(mapToken.get("token")[1]).append(",")
-                .append(mapToken.get("token")[2]).append("}");
+                .append(mapToken.get("token")[2]).append("}").
+                append(mapToken.get("token")[2]).append("} [").append(rules).append("]");;
         return super.toString() + temp.toString();
     }
 
@@ -57,7 +63,8 @@ public class LatLong extends Header {
         temp.append("[").append("[ComponentName: ").append(this.componentName).append(" {");
         temp.append(mapToken.get("token")[0]).append(",")
                 .append(mapToken.get("token")[1]).append(",")
-                .append(mapToken.get("token")[2]).append("}");
+                .append(mapToken.get("token")[2]).append("} [").append(rules).append("]");
         return temp.toString();
     }
+
 }
