@@ -4,13 +4,11 @@ import fr.ste.lod.crew.NellOntologyConverter;
 import fr.ste.lod.crew.extract.metadata.models.ConstantList;
 import fr.ste.lod.crew.extract.metadata.models.Header;
 import fr.ste.lod.crew.extract.metadata.models.LatLong;
-import fr.ste.lod.crew.extract.metadata.util.Component;
 import fr.ste.lod.crew.extract.metadata.models.LineInstanceJOIN;
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 import org.apache.jena.datatypes.RDFDatatype;
 import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.rdf.model.*;
-import org.apache.jena.sparql.core.Quad;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
 import org.apache.log4j.Logger;
@@ -160,19 +158,19 @@ public class StringTranslate {
 			this.model.createResource(this.provenanceOntologyBase + CLASS_COMPONENT);
 			this.model.createResource(this.provenanceOntologyBase + CLASS_COMPONENT_ITERATION);
 
-            this.model.createResource(this.provenanceOntologyBase + Component.ALIAS_MATCHER);
-            this.model.createResource(this.provenanceOntologyBase + Component.CMC);
-            this.model.createResource(this.provenanceOntologyBase + Component.CPL);
-            this.model.createResource(this.provenanceOntologyBase + Component.LE);
-            this.model.createResource(this.provenanceOntologyBase + Component.LATLONG);
-            this.model.createResource(this.provenanceOntologyBase + Component.MBL);
-            this.model.createResource(this.provenanceOntologyBase + Component.OE);
-            this.model.createResource(this.provenanceOntologyBase + Component.ONTOLOGY_MODIFIER);
-            this.model.createResource(this.provenanceOntologyBase + Component.PRA);
-            this.model.createResource(this.provenanceOntologyBase + Component.RULE_INFERENCE);
-            this.model.createResource(this.provenanceOntologyBase + Component.SEAL);
-            this.model.createResource(this.provenanceOntologyBase + Component.SEMPARSE);
-            this.model.createResource(this.provenanceOntologyBase + Component.SPREADSHEET_EDITS);
+            this.model.createResource(this.provenanceOntologyBase + ConstantList.ALIASMATCHER);
+            this.model.createResource(this.provenanceOntologyBase + ConstantList.CMC);
+            this.model.createResource(this.provenanceOntologyBase + ConstantList.CPL);
+            this.model.createResource(this.provenanceOntologyBase + ConstantList.LE);
+            this.model.createResource(this.provenanceOntologyBase + ConstantList.LATLONG);
+            this.model.createResource(this.provenanceOntologyBase + ConstantList.MBL);
+            this.model.createResource(this.provenanceOntologyBase + ConstantList.OE);
+            this.model.createResource(this.provenanceOntologyBase + ConstantList.ONTOLOGYMODIFIER);
+            this.model.createResource(this.provenanceOntologyBase + ConstantList.PRA);
+            this.model.createResource(this.provenanceOntologyBase + ConstantList.RULEINFERENCE);
+            this.model.createResource(this.provenanceOntologyBase + ConstantList.SEAL);
+            this.model.createResource(this.provenanceOntologyBase + ConstantList.SEMPARSE);
+            this.model.createResource(this.provenanceOntologyBase + ConstantList.SPREADSHEETEDITS);
 		}
 	}
 	
@@ -213,16 +211,16 @@ public class StringTranslate {
 
 	private void stringToRDFWithQuads(final String[] nellData) {
 
-        // Create normal triple without metadata
-        final Statement triple = stringToRDFWithoutMetadata(nellData);
-
-		// Create QUAD
-		final Resource tripleId = createSequentialResource("ID");
-		final Quad quad = new Quad(tripleId.asNode(), triple.asTriple());
-		triple.createReifiedStatement();
-
-        // Attach metadata to triple ID
-        attachMetadata(tripleId, nellData);
+//        // Create normal triple without metadata
+//        final Statement triple = stringToRDFWithoutMetadata(nellData);
+//
+//		// Create QUAD
+//		final Resource tripleId = createSequentialResource("ID");
+//		final Quad quad = new Quad(tripleId.asNode(), triple.asTriple());
+//		triple.createReifiedStatement();
+//
+//        // Attach metadata to triple ID
+//        attachMetadata(tripleId, nellData);
 	}
 
 	private void stringToRDFWithNAry(final String[] nellData) {
@@ -267,7 +265,7 @@ public class StringTranslate {
 
             // Create the Component Iteration
             predicate_λ = this.model.getProperty(PROPERTY_PROV_WAS_GENERATED_BY);
-            RDFNode componentIteration = createSequentialResource(K);
+            RDFNode componentIteration = createSequentialResource(K, CLASS_BELIEF);
             resource.addProperty(predicate_λ,componentIteration);
 
             // Add data to Component Iteration
@@ -296,7 +294,7 @@ public class StringTranslate {
             // Create Token
             RDFNode token;
             if (V instanceof LatLong) {
-                token = createSequentialResource(RESOURCE_TOKEN_GEO);
+                token = createSequentialResource(RESOURCE_TOKEN_GEO, CLASS_TOKEN_GEO);
                 predicate_λ = model.getProperty(PREFIX_PROVENANCE_ONTOLOGY,PROPERTY_GENERALIZATION_VALUE);
                 double[] latlong= V.getFormatHeader().getTokenElement2LatLong();
                 object_λ = model.createTypedLiteral(latlong[0], XSDDatatype.XSDdecimal);
@@ -307,19 +305,19 @@ public class StringTranslate {
             } else {
                 switch (V.getFormatHeader().getTypeKB()) {
                     case ConstantList.RELATION:
-                        token = createSequentialResource(RESOURCE_TOKEN_RELATION);
+                        token = createSequentialResource(RESOURCE_TOKEN_RELATION, CLASS_TOKEN_RELATION);
                         predicate_λ = model.getProperty(PREFIX_PROVENANCE_ONTOLOGY,PROPERTY_RELATION_VALUE);
                         object_λ = model.createTypedLiteral(V.getFormatHeader().getTokenElement2(), XSDDatatype.XSDstring);
                         token.asResource().addProperty(predicate_λ, object_λ);
                         break;
                     case ConstantList.CATEGORY:
-                        token = createSequentialResource(RESOURCE_TOKEN_GENERALIZATION);
+                        token = createSequentialResource(RESOURCE_TOKEN_GENERALIZATION, CLASS_TOKEN_GENERALIZATION);
                         predicate_λ = model.getProperty(PREFIX_PROVENANCE_ONTOLOGY,PROPERTY_GENERALIZATION_VALUE);
                         object_λ = model.createTypedLiteral(V.getFormatHeader().getTokenElement2(), XSDDatatype.XSDstring);
                         token.asResource().addProperty(predicate_λ, object_λ);
                         break;
                     default:
-                        token = createSequentialResource(RESOURCE_TOKEN);
+                        token = createSequentialResource(RESOURCE_TOKEN, CLASS_TOKEN);
                         break;
                 }
             }
@@ -453,8 +451,9 @@ public class StringTranslate {
 		return resource;
 	}
 
-	private Resource createSequentialResource(final String resource_name) {
+	private Resource createSequentialResource(final String resource_name, final String type) {
 		final Resource resource = this.model.createResource(createSequentialResourceUri(resource_name));
+		resource.addProperty(RDF.type, model.getResource(PROVENANCE_ONTOLOGY + type));
 		return resource;
 	}
 
