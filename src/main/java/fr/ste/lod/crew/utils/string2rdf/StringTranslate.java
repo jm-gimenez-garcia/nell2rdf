@@ -215,7 +215,7 @@ public class StringTranslate {
 //        final Statement triple = stringToRDFWithoutMetadata(nellData);
 //
 //		// Create QUAD
-//		final Resource tripleId = createSequentialResource("ID");
+//		final Resource tripleId = createSequentialProvenanceResource("ID");
 //		final Quad quad = new Quad(tripleId.asNode(), triple.asTriple());
 //		triple.createReifiedStatement();
 //
@@ -234,7 +234,7 @@ public class StringTranslate {
 		final Statement triple = stringToRDFWithoutMetadata(nellData);
 
 		// Create reification
-        ReifiedStatement statement = triple.createReifiedStatement(createSequentialResourceUri(STATEMENT));
+        ReifiedStatement statement = triple.createReifiedStatement(createSequentialProvenanceResourceUri(STATEMENT));
 
 		// Attach metadata to reification statement
 		attachMetadata(statement, nellData);
@@ -265,7 +265,7 @@ public class StringTranslate {
 
             // Create the Component Iteration
             predicate_λ = this.model.getProperty(PROPERTY_PROV_WAS_GENERATED_BY);
-            RDFNode componentIteration = createSequentialResource(K, CLASS_BELIEF);
+            RDFNode componentIteration = createSequentialProvenanceResource(K, CLASS_COMPONENT_ITERATION);
             resource.addProperty(predicate_λ,componentIteration);
 
             // Add data to Component Iteration
@@ -294,7 +294,7 @@ public class StringTranslate {
             // Create Token
             RDFNode token;
             if (V instanceof LatLong) {
-                token = createSequentialResource(RESOURCE_TOKEN_GEO, CLASS_TOKEN_GEO);
+                token = createSequentialProvenanceResource(RESOURCE_TOKEN_GEO, CLASS_TOKEN_GEO);
                 predicate_λ = model.getProperty(PREFIX_PROVENANCE_ONTOLOGY,PROPERTY_GENERALIZATION_VALUE);
                 double[] latlong= V.getFormatHeader().getTokenElement2LatLong();
                 object_λ = model.createTypedLiteral(latlong[0], XSDDatatype.XSDdecimal);
@@ -305,19 +305,19 @@ public class StringTranslate {
             } else {
                 switch (V.getFormatHeader().getTypeKB()) {
                     case ConstantList.RELATION:
-                        token = createSequentialResource(RESOURCE_TOKEN_RELATION, CLASS_TOKEN_RELATION);
+                        token = createSequentialProvenanceResource(RESOURCE_TOKEN_RELATION, CLASS_TOKEN_RELATION);
                         predicate_λ = model.getProperty(PREFIX_PROVENANCE_ONTOLOGY,PROPERTY_RELATION_VALUE);
                         object_λ = model.createTypedLiteral(V.getFormatHeader().getTokenElement2(), XSDDatatype.XSDstring);
                         token.asResource().addProperty(predicate_λ, object_λ);
                         break;
                     case ConstantList.CATEGORY:
-                        token = createSequentialResource(RESOURCE_TOKEN_GENERALIZATION, CLASS_TOKEN_GENERALIZATION);
+                        token = createSequentialProvenanceResource(RESOURCE_TOKEN_GENERALIZATION, CLASS_TOKEN_GENERALIZATION);
                         predicate_λ = model.getProperty(PREFIX_PROVENANCE_ONTOLOGY,PROPERTY_GENERALIZATION_VALUE);
                         object_λ = model.createTypedLiteral(V.getFormatHeader().getTokenElement2(), XSDDatatype.XSDstring);
                         token.asResource().addProperty(predicate_λ, object_λ);
                         break;
                     default:
-                        token = createSequentialResource(RESOURCE_TOKEN, CLASS_TOKEN);
+                        token = createSequentialProvenanceResource(RESOURCE_TOKEN, CLASS_TOKEN);
                         break;
                 }
             }
@@ -445,21 +445,21 @@ public class StringTranslate {
 //        return property;
 //    }
 
-	private Resource createSequentialResource(final Resource resource_class) {
-		final Resource resource = this.model.createResource(createSequentialResourceUri(resource_class.getLocalName()));
+	private Resource createSequentialProvenanceResource(final Resource resource_class) {
+		final Resource resource = this.model.createResource(createSequentialProvenanceResourceUri(resource_class.getLocalName()));
 		resource.addProperty(RDF.type, resource_class);
 		return resource;
 	}
 
-	private Resource createSequentialResource(final String resource_name, final String type) {
-		final Resource resource = this.model.createResource(createSequentialResourceUri(resource_name));
-		resource.addProperty(RDF.type, model.getResource(PROVENANCE_ONTOLOGY + type));
+	private Resource createSequentialProvenanceResource(final String resource_name, final String type) {
+		final Resource resource = this.model.createResource(createSequentialProvenanceResourceUri(resource_name));
+		resource.addProperty(RDF.type, model.getResource(this.provenanceOntologyBase + type));
 		return resource;
 	}
 
-    private String createSequentialResourceUri(final String name) {
+    private String createSequentialProvenanceResourceUri(final String name) {
 //	    return this.resourceBase + name + ++this.statementNumber;
-        return this.resourceBase + name + numberSequences.compute(name, (K,V) -> V == null ? 1 : ++V);
+        return this.provenanceResourceBase + name + numberSequences.compute(name, (K,V) -> V == null ? 1 : ++V);
     }
 
 	/**
