@@ -5,6 +5,8 @@
  */
 package fr.ste.lod.crew.extract.metadata.models;
 
+import static fr.ste.lod.crew.extract.metadata.models.ConstantList.LATLONG;
+import static fr.ste.lod.crew.extract.metadata.models.ConstantList.LATLONGTT;
 import fr.ste.lod.crew.extract.metadata.util.Utility;
 
 /**
@@ -13,17 +15,21 @@ import fr.ste.lod.crew.extract.metadata.util.Utility;
  */
 public class LatLong extends Header {
 
+    private String rules;
+
     public LatLong(String str, String ComponentName, double Probability) {
         super(str, ComponentName, Probability);
     }
 
     @Override
     public void processStringText(String str) {
-        /*  if (this.componentName.equalsIgnoreCase(LATLONG)) {
+        String temp = "";
+        if (this.componentName.equalsIgnoreCase(LATLONG)) {
             temp = Utility.getLatog(str);
         } else if (this.componentName.equalsIgnoreCase(LATLONGTT)) {
             temp = Utility.getLatogTT(str);
-        }*/
+        }
+        this.rules = temp;
     }
 
     @Override
@@ -54,5 +60,4 @@ public class LatLong extends Header {
                 .append(mapToken.get("token")[2]).append("}");
         return temp.toString();
     }
-
 }

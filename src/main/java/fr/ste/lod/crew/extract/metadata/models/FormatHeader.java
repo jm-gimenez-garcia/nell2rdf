@@ -57,7 +57,7 @@ public class FormatHeader {
     public void formattingHeaderToken(Map<String, String[]> in, String componentName) {
         this.componentName = componentName;
 
-        if (this.componentName.equals(ConstantList.LATLONG)) {
+        if (this.componentName.equals(ConstantList.LATLONG) || (this.componentName.equals(ConstantList.LATLONGTT))) {
             tokenFormatedLL.put(in.get(TOKEN)[0],
                     new Double[]{Double.valueOf(in.get(TOKEN)[1]), Double.valueOf(in.get(TOKEN)[2])});
             tokenmodel = new TokenModel(this.componentName,
@@ -81,8 +81,13 @@ public class FormatHeader {
     }
 
     public String getTokenElement1() {
-        if (this.componentName.equals(ConstantList.LATLONG)) {
-            return tokenFormatedLL.toString().split(", ")[0];
+        if (this.componentName.equals(ConstantList.LATLONG) || this.componentName.equals(ConstantList.LATLONGTT)) {
+            String element1temp = "";
+            for (Map.Entry<String, Double[]> entry : tokenFormatedLL.entrySet()) {
+                element1temp = entry.getKey();
+            }
+            return element1temp;
+
         } else {
             return tokenFormated.get(ELEMENT1);
         }
@@ -103,13 +108,14 @@ public class FormatHeader {
     public double[] getTokenElement2LatLong() {
         double[] tempDouble = new double[2];
         try {
-            String tempString[] = tokenFormatedLL.toString().split(", ");
-            tempDouble[0] = Double.valueOf(tempString[1]);
-            tempDouble[1] = Double.valueOf(tempString[2]);
+            for (Map.Entry<String, Double[]> entry : tokenFormatedLL.entrySet()) {
+                tempDouble[0] = entry.getValue()[0];
+                tempDouble[1] = entry.getValue()[1];
+            }
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Birosca1");
+            System.out.println(LineInstanceJOIN.completeLine);
         }
         return tempDouble;
     }
-
 }

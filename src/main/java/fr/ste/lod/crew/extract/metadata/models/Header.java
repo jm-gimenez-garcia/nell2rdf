@@ -142,5 +142,4 @@ public abstract class Header {
     public FormatHeader getFormatHeader() {
         return formatHeader;
     }
-
 }

@@ -30,6 +30,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -130,6 +131,7 @@ public class ManipulationExecution {
                     case ConstantList.LATLONG:
                     case ConstantList.LATLONGTT:
                         temp.append(((LatLong) pair.getValue()).toString());
+                        System.out.println(Arrays.toString(((LatLong) pair.getValue()).getFormatHeader().getTokenElement2LatLong()));
                         break;
                     default:
                         throw new IllegalArgumentException("Invalid Component Name: " + key);

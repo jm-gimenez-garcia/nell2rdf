@@ -16,7 +16,9 @@ public class Main {
 
    //public static String fileNELLcsv = "D:\\Google-Drive\\PG\\RDF_NELL\\Teste_NELL.08m.1045.esv.csv";
     //public static String fileNELLcsv = "D:\\Google-Drive\\PG\\NELL2RDF\\NELL.08m.1050.esv.csv";
-    public static String fileNELLcsv = "D:\\NELL.08m.995.esv";
+    //public static String fileNELLcsv = "D:\\NELL.08m.1050.cesv.csv";
+    public static String fileNELLcsv = "D:\\NELL.08m.990.cesv.csv";
+    //public static String fileNELLcsv = "D:\\teste.txt";
     public static String fileOut = "D:\\Google-Drive\\PG\\NELL2RDF\\";
     public static String fileOutToString = "D:\\fileOutToString";
 
