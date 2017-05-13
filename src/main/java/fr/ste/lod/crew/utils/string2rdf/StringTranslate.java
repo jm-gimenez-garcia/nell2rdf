@@ -202,19 +202,19 @@ public class StringTranslate {
     }
 
     private void createComponents() {
-        this.model.createResource(this.provenanceOntologyBase + ConstantList.ALIASMATCHER);
-        this.model.createResource(this.provenanceOntologyBase + ConstantList.CMC);
-        this.model.createResource(this.provenanceOntologyBase + ConstantList.CPL);
-        this.model.createResource(this.provenanceOntologyBase + ConstantList.LE);
-        this.model.createResource(this.provenanceOntologyBase + ConstantList.LATLONG);
-        this.model.createResource(this.provenanceOntologyBase + ConstantList.MBL);
-        this.model.createResource(this.provenanceOntologyBase + ConstantList.OE);
-        this.model.createResource(this.provenanceOntologyBase + ConstantList.ONTOLOGYMODIFIER);
-        this.model.createResource(this.provenanceOntologyBase + ConstantList.PRA);
-        this.model.createResource(this.provenanceOntologyBase + ConstantList.RULEINFERENCE);
-        this.model.createResource(this.provenanceOntologyBase + ConstantList.SEAL);
-        this.model.createResource(this.provenanceOntologyBase + ConstantList.SEMPARSE);
-        this.model.createResource(this.provenanceOntologyBase + ConstantList.SPREADSHEETEDITS);
+        this.model.createResource(this.provenanceResourceBase + ConstantList.ALIASMATCHER);
+        this.model.createResource(this.provenanceResourceBase + ConstantList.CMC);
+        this.model.createResource(this.provenanceResourceBase + ConstantList.CPL);
+        this.model.createResource(this.provenanceResourceBase + ConstantList.LE);
+        this.model.createResource(this.provenanceResourceBase + ConstantList.LATLONG);
+        this.model.createResource(this.provenanceResourceBase + ConstantList.MBL);
+        this.model.createResource(this.provenanceResourceBase + ConstantList.OE);
+        this.model.createResource(this.provenanceResourceBase + ConstantList.ONTOLOGYMODIFIER);
+        this.model.createResource(this.provenanceResourceBase + ConstantList.PRA);
+        this.model.createResource(this.provenanceResourceBase + ConstantList.RULEINFERENCE);
+        this.model.createResource(this.provenanceResourceBase + ConstantList.SEAL);
+        this.model.createResource(this.provenanceResourceBase + ConstantList.SEMPARSE);
+        this.model.createResource(this.provenanceResourceBase + ConstantList.SPREADSHEETEDITS);
     }
 
 	private void attachMetadata(final Resource resource, final String[] nellData) {
