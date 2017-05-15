@@ -123,7 +123,7 @@ public class NellOntologyConverter {
 		}
 
 		final File f = new File(args[4]);
-		final File n = new File(args[6])
+		final File n = new File(args[6]);
 
 		return (f.exists() && f.isFile() && n.exists() && n.isFile());
 	}
