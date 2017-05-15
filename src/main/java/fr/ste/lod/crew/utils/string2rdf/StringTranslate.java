@@ -167,7 +167,7 @@ public class StringTranslate {
 		final Statement triple = stringToRDFWithoutMetadata(nellData);
 
 		// Create reification
-        ReifiedStatement statement = triple.createReifiedStatement(createSequentialProvenanceResourceUri(ConstantList.STATEMENT));
+        ReifiedStatement statement = triple.createReifiedStatement(createSequentialProvenanceResourceUri(ConstantList.RESOURCE_BELIEF));
 
 		// Attach metadata to reification statement
 		attachMetadata(statement, nellData);
@@ -223,6 +223,7 @@ public class StringTranslate {
 		RDFNode object;
 
 		createProvenanceOntology();
+        resource.addProperty(RDF.type, model.getResource(this.provenanceOntologyBase + ConstantList.CLASS_BELIEF));
 
 		LineInstanceJOIN metadata = new LineInstanceJOIN(nellData[0], nellData[1], nellData[2], nellData[3], nellData[4], Utility.DecodeURL(nellData[5]), nellData[6], nellData[7], nellData[8], nellData[9], nellData[10], nellData[11], Utility.DecodeURL(nellData[12]), String.join("\t", nellData), this.candidates);
 
@@ -438,8 +439,6 @@ public class StringTranslate {
 
 	private Resource createSequentialProvenanceResource(final String resource_name, final String type) {
 		final Resource resource = this.model.createResource(createSequentialProvenanceResourceUri(resource_name));
-
-
 		resource.addProperty(RDF.type, model.getResource(this.provenanceOntologyBase + type));
 		return resource;
 	}
