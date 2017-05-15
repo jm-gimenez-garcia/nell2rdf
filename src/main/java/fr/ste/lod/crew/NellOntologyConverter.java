@@ -118,19 +118,12 @@ public class NellOntologyConverter {
 	 */
 	private static boolean areSuppliedArgumentsOK(String[] args) {
 
-	    System.out.println("args.length = " + args.length);
-
 		if (args.length != 8 && args.length != 9) {
 			return false;
 		}
 
 		final File f = new File(args[4]);
-		final File n = new File(args[6]);
-
-        System.out.println("f.exists() = " + f.exists());
-        System.out.println("f.isFile() = " + f.isFile());
-        System.out.println("n.exists() = " + n.exists());
-        System.out.println("n.isFile() = " + n.isFile());
+		final File n = new File(args[6])
 
 		return (f.exists() && f.isFile() && n.exists() && n.isFile());
 	}
