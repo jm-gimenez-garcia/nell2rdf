@@ -87,4 +87,7 @@ public abstract class ConstantList {
     public static final String RESOURCE_TOKEN_GEO = "geoToken";
 
     public static final String  STATEMENT               = "statement";
+
+    public static final String SUFFIX_PROMOTED = "Promoted";
+    public static final String SUFFIX_CANDIDATE = "Candidate";
 }

@@ -434,13 +434,14 @@ public class StringTranslate {
 
 	private Resource createSequentialProvenanceResource(final String resource_name, final String type) {
 		final Resource resource = this.model.createResource(createSequentialProvenanceResourceUri(resource_name));
+
+
 		resource.addProperty(RDF.type, model.getResource(this.provenanceOntologyBase + type));
 		return resource;
 	}
 
     private String createSequentialProvenanceResourceUri(final String name) {
-//	    return this.resourceBase + name + ++this.statementNumber;
-        return this.provenanceResourceBase + name + numberSequences.compute(name, (K,V) -> V == null ? 1 : ++V);
+        return this.provenanceResourceBase + name + (this.candidates ? ConstantList.SUFFIX_CANDIDATE : ConstantList.SUFFIX_PROMOTED) + numberSequences.compute(name, (K,V) -> V == null ? 1 : ++V);
     }
 
 	/**
