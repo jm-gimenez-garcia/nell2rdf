@@ -66,6 +66,7 @@ public abstract class ConstantList {
     public static final String PROPERTY_AT_TIME = "atTime";
     public static final String PROPERTY_SOURCE = "source";
     public static final String PROPERTY_TOKEN = "hasToken";
+    public static final String PROPERTY_TOKE_ENTITY = "tokenEntity";
     public static final String PROPERTY_RELATION_VALUE = "relationValue";
     public static final String PROPERTY_GENERALIZATION_VALUE = "generalizationValue";
     public static final String PROPERTY_LATITUDE_VALUE = "latitudeValue";

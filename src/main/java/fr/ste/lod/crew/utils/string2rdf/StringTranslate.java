@@ -184,6 +184,7 @@ public class StringTranslate {
         this.model.createProperty(this.provenanceOntologyBase + ConstantList.PROPERTY_AT_TIME);
         this.model.createProperty(this.provenanceOntologyBase + ConstantList.PROPERTY_SOURCE);
         this.model.createProperty(this.provenanceOntologyBase + ConstantList.PROPERTY_TOKEN);
+        this.model.createProperty(this.provenanceOntologyBase + ConstantList.PROPERTY_TOKE_ENTITY);
         this.model.createProperty(this.provenanceOntologyBase + ConstantList.PROPERTY_RELATION_VALUE);
         this.model.createProperty(this.provenanceOntologyBase + ConstantList.PROPERTY_GENERALIZATION_VALUE);
         this.model.createProperty(this.provenanceOntologyBase + ConstantList.PROPERTY_LATITUDE_VALUE);
@@ -302,6 +303,9 @@ public class StringTranslate {
                         break;
                 }
             }
+            predicate_λ = model.getProperty(this.provenanceOntologyBase + ConstantList.PROPERTY_TOKE_ENTITY);
+            object_λ = model.createTypedLiteral(V.getFormatHeader().getTokenElement1(), XSDDatatype.XSDstring);
+            token.asResource().addProperty(predicate_λ, object_λ);
             predicate_λ = model.getProperty(this.provenanceOntologyBase + ConstantList.PROPERTY_TOKEN);
             componentIteration.asResource().addProperty(predicate_λ, token);
         });
