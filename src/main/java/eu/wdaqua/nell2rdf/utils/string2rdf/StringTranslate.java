@@ -112,6 +112,8 @@ public class StringTranslate {
 			case NellOntologyConverter.NDFLUENTS:
 				setBase(NAMESPACE_PREFIX + NAMESPACE_MIDDLE_NDFLUENTS);
 				break;
+			case NellOntologyConverter.NDPROPERTIES:
+				setBase(NAMESPACE_PREFIX + NAMESPACE_MIDDLE_NDPROPERTIES);
 			default:
 				this.log.warn("Metadata model not recognized. Converting string to RDF without metadata");
 				setBase(NAMESPACE_PREFIX);
@@ -191,6 +193,10 @@ public class StringTranslate {
 					optionalAnchor = Optional.of(toNdFluents(triple));
 					optionalDPTanchor = optionalDBpediaTriple.map(dbpediaTriple -> toNdFluents(dbpediaTriple));
 					break;
+				case NellOntologyConverter.NDPROPERTIES:
+					this.log.debug("Converting string to RDF using NdProperties to attach metadata");
+					optionalAnchor = Optional.of(toNdProperties(triple));
+					optionalDPTanchor = optionalDBpediaTriple.map(dbpediaTriple -> toNdProperties(dbpediaTriple));
 				default:
 					this.log.warn("Metadata model not recognized. Converting string to RDF without metadata");
 					optionalAnchor = Optional.empty();

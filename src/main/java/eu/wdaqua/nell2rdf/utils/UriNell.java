@@ -14,6 +14,7 @@ public class UriNell {
 	public static final String			NAMESPACE_MIDDLE_NAMED_GRAPHS			= "quad/";
 	public static final String			NAMESPACE_MIDDLE_NARY_RELATIONS			= "nary/";
 	public static final String			NAMESPACE_MIDDLE_NDFLUENTS				= "nd/";
+	public static final String			NAMESPACE_MIDDLE_NDPROPERTIES			= "np/";
 	public static final String			NAMESPACE_MIDDLE_REIFICATION			= "reif/";
 	public static final String			NAMESPACE_MIDDLE_SINGLETON_PROPERTY		= "sp/";
 	public static final String			NAMESPACE_END_RESOURCE					= "resource/";
