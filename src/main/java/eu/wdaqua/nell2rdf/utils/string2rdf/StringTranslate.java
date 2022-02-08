@@ -197,6 +197,7 @@ public class StringTranslate {
 					this.log.debug("Converting string to RDF using NdProperties to attach metadata");
 					optionalAnchor = Optional.of(toNdProperties(triple));
 					optionalDPTanchor = optionalDBpediaTriple.map(dbpediaTriple -> toNdProperties(dbpediaTriple));
+					break;
 				default:
 					this.log.warn("Metadata model not recognized. Converting string to RDF without metadata");
 					optionalAnchor = Optional.empty();
@@ -221,6 +222,12 @@ public class StringTranslate {
 		}
 		this.model.write(this.outputStream, this.lang);
 		this.model.removeAll();
+	}
+
+	private Resource toNdProperties(final Statement triple) {
+		// do nothing for now
+		final Resource resource = this.model.createResource();
+		return resource;
 	}
 
 	private Resource toNdFluents(final Statement triple) {
