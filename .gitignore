@@ -80,6 +80,12 @@ local.properties
 NellConverter.iml
 
 ######################
+# Visual Studio Code
+######################
+
+.vscode/
+
+######################
 # Maven build
 ######################
 
